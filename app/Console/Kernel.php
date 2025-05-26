@@ -28,4 +28,8 @@ class Kernel extends ConsoleKernel
     // ...
     'admin' => \App\Http\Middleware\AdminMiddleware::class,
 ];
+protected $commands = [
+    \App\Console\Commands\CreateAdminUser::class,
+    // other commands...
+];
 }
