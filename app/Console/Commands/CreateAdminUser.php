@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Hash;
 
 class CreateAdminUser extends Command
 {
@@ -11,25 +13,37 @@ class CreateAdminUser extends Command
      *
      * @var string
      */
-    protected $signature = 'app:create-admin-user';
+    protected $signature = 'make:admin';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Create a new admin user';
 
     /**
      * Execute the console command.
      */
-    
-    public function handle($request, Closure $next)
-{
-    if (!auth()->user() || !auth()->user()->is_admin) {
-        abort(403);
+    public function handle()
+    {
+        $name = $this->ask('Enter name');
+        $email = $this->ask('Enter email');
+        $password = $this->secret('Enter password');
+        $confirm = $this->secret('Confirm password');
+
+        if ($password !== $confirm) {
+            $this->error('Passwords do not match!');
+            return;
+        }
+
+        User::create([
+            'name' => $name,
+            'email' => $email,
+            'password' => Hash::make($password),
+            'is_admin' => true,
+        ]);
+
+        $this->info('Admin user created successfully!');
     }
-    
-    return $next($request);
-}
 }
