@@ -16,8 +16,8 @@ use App\Http\Controllers\AdminController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-    // return view('/auth/register');
+    // return view('welcome');
+    return view('/auth/register');
 });
 
 Route::get('/dashboard', function () {
@@ -36,3 +36,4 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     // Add more admin routes here
 });
+// route::middleware(auth)->group(function ():void{});
