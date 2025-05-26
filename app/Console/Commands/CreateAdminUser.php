@@ -23,8 +23,13 @@ class CreateAdminUser extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
-    {
-        //
+    
+    public function handle($request, Closure $next)
+{
+    if (!auth()->user() || !auth()->user()->is_admin) {
+        abort(403);
     }
+    
+    return $next($request);
+}
 }
