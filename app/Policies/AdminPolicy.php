@@ -7,6 +7,13 @@ use Illuminate\Auth\Access\Response;
 
 class AdminPolicy
 {
+   
+    // To identfy a role 
+    public function admin(User $user)
+    {
+        return $user->is_admin;
+    }
+
     /**
      * Determine whether the user can access admin dashboard.
      */
@@ -89,4 +96,5 @@ class AdminPolicy
     {
         return $user->is_admin;
     }
+    
 }

@@ -10,19 +10,20 @@ return new class extends Migration
      * Run the migrations.
      */
    
-public function up()
+  public function up()
 {
-    Schema::table('users', function (Blueprint $table) {
-        $table->boolean('is_admin')->default(false);
-    });
-}
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
+    if (!Schema::hasColumn('users', 'is_admin')) {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->boolean('is_admin')->default(false);
         });
     }
+}
+// reverse migration 
+public function down()
+{
+    Schema::table('users', function (Blueprint $table) {
+        $table->dropColumn('is_admin');
+    });
+}
 };
+

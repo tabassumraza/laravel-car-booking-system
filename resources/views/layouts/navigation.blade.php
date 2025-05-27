@@ -17,6 +17,20 @@
                     </x-nav-link>
                 </div>
             </div>
+            <!--adding nav-->
+            @auth
+    <div class="hidden sm:flex sm:items-center sm:ml-6">
+        @if(auth()->user()->is_admin)
+            <x-nav-link :href="route('admin.dashboard')" :active="request()->is('admin*')">
+                Admin Dashboard
+            </x-nav-link>
+        @else
+            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                My Dashboard
+            </x-nav-link>
+        @endif
+    </div>
+@endauth
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">

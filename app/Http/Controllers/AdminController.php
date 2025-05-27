@@ -11,24 +11,28 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        // Apply admin middleware to all methods
         $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            if (!Gate::allows('admin')) {
-                abort(403);
-            }
-            return $next($request);
-        });
+        // $this->middleware('admin');
+        // issue 
     }
 
     /**
      * Display admin dashboard
      */
+//     public function dashboard()
+// {
+//     if (!auth()->user()->is_admin) {
+//         abort(403, 'Unauthorized action.');
+//     }
+//     return view('admin.dashboard');
+// }
     public function dashboard()
     {
+        // dd('here');
         return view('admin.dashboard', [
             'userCount' => User::count(),
-            'adminCount' => User::where('is_admin', true)->count(),
+            // 'adminCount' => User::where('is_admin', true)->count(),
+            'recentUsers' => User::latest()->take(5)->get()
         ]);
     }
 
@@ -100,10 +104,23 @@ class AdminController extends Controller
             'maintenance_mode' => ['boolean'],
         ]);
 
-        // Update settings (you might use a settings package or database table)
-        // This is just an example
-        setting()->set($validated);
-        setting()->save();
+        // If you're using the 'qcod/laravel-app-settings' package
+        if (function_exists('setting')) {
+            setting()->set($validated);
+            setting()->save();
+        } else {
+            // Alternative storage method (database, config, etc.)
+            // For example, using the database:
+            \App\Models\Setting::updateOrCreate(
+                ['key' => 'site_name'],
+                ['value' => $validated['site_name']]
+            );
+            
+            \App\Models\Setting::updateOrCreate(
+                ['key' => 'maintenance_mode'],
+                ['value' => $validated['maintenance_mode']]
+            );
+        }
 
         return back()->with('success', 'Settings updated successfully');
     }

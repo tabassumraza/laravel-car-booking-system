@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CarListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,24 +18,45 @@ use App\Http\Controllers\AdminController;
 */
 
 Route::get('/', function () {
-    // return view('welcome');
-    return view('/auth/register');
+    return view('auth.register');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Authentication routes
+require __DIR__.'/auth.php';
 
-Route::middleware('auth')->group(function () {
+
+// Admin routes
+Route::middleware(['auth'])->prefix('admin')->group(function () {
+   
+     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+//     // Add more admin routes here
+});
+
+// Authenticated user routes (both admin and regular users)
+    
+
+    Route::middleware(['auth', 'verified'])->group(function () {
+    // Smart dashboard that redirects based on user type
+    Route::get('/dashboard', function () {
+        return auth()->user()->is_admin 
+            ? redirect()->route('admin.dashboard')
+            : redirect()->route('user.dashboard');
+    })->name('dashboard');
+
+
+    // User profile routes dd(User::where('is_admin', true)->count())
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
-require __DIR__.'/auth.php';
-
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    // Add more admin routes here
+    // User dashboard and car routes
+    Route::prefix('user')->group(function () {
+        Route::get('/dashboard', function () {
+            $cars = DB::table('carlists')->get();
+            return view('user.dashboard', compact('cars'));
+        })->name('user.dashboard');
+        
+        Route::get('/addlist', [CarListController::class, 'create'])->name('cars.create');
+        Route::post('/addlist', [CarListController::class, 'store'])->name('cars.store');
+    });
 });
-// route::middleware(auth)->group(function ():void{});
