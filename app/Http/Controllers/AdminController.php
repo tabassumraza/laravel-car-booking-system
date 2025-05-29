@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Gate;
-
+use App\Models\Carlist;
 class AdminController extends Controller
 {
     public function __construct()
@@ -27,11 +26,12 @@ class AdminController extends Controller
 // }
     public function dashboard()
     {
-        // dd('here');
         return view('admin.dashboard', [
             'userCount' => User::count(),
             'adminCount' => User::where('is_admin', true)->count(),
-            'recentUsers' => User::latest()->take(5)->get()
+            'recentUsers' => User::latest()->take(5)->get(),
+                'cars' => Carlist::all() // Get all cars
+
         ]);
     }
 
