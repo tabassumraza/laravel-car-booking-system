@@ -33,7 +33,7 @@ class CarListController extends Controller
       public function update(CarListRequest $request, $id)
     {
         $car = CarList::findOrFail($id);
-        $car->book = $request->input('name');
+        $car->name = $request->input('name');
         $car->description = $request->input('description');
         $car->carnum = $request->input('carnum');
         $car->save();

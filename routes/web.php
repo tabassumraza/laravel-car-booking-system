@@ -28,11 +28,10 @@ require __DIR__.'/auth.php';
 
 // Admin routes
 Route::middleware(['auth'])->prefix('admin')->group(function () {
-   
-     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 //     // Add more admin routes here
 Route::post('car/remove', [RemoveController::class, 'deleteCar'])->name('admin.car.remove');
-Route::put('car/update/{id}', [CarListController::class, 'update'])->name('admin.car.update');
+Route::post('car/update/{id}', [CarListController::class, 'update'])->name('admin.car.update');
 
 
 

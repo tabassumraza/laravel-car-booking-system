@@ -43,7 +43,6 @@
                 </div>
             </div>
 
-            <!-- Cars List Section -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="flex justify-between items-center mb-4">
@@ -75,20 +74,22 @@
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $car->name }}</td>
                                             <!-- <td class="px-6 py-4 whitespace-nowrap">
-                                                                @if($car->picture)
-                                                                    <img src="{{ $car->picture }}" alt="{{ $car->name }}" class="h-10">
-                                                                @else
-                                                                    No Image
-                                                                @endif
-                                                            </td> -->
+                                                                        @if($car->picture)
+                                                                            <img src="{{ $car->picture }}" alt="{{ $car->name }}" class="h-10">
+                                                                        @else
+                                                                            No Image
+                                                                        @endif
+                                                                    </td> -->
                                             <td class="px-6 py-4">{{ Str::limit($car->carnum, 50) }}</td>
 
                                             <td class="px-6 py-4">{{ Str::limit($car->description, 50) }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <!-- BUTTON TO EDIT CAR DETAILS  -->
-                                                <button class="text-blue-500 hover:underline editChapterBtn inline-block"
-                                                    data-id="{{ $car->id }}" data-name="{{ $car->name }}"
-                                                    data-carnum="{{ $car->carnum }}" data-description="{{ $car->description }}">
+                                                <button class="text-blue-500 hover:underline editBtn inline-block"
+                                                    data-id="{{ $car->id }}" 
+                                                    data-name="{{ $car->name }}"
+                                                    data-carnum="{{ $car->carnum }}" 
+                                                    data-description="{{ $car->description }}">
                                                     EDIT✏️
                                                 </button>
 
@@ -116,6 +117,55 @@
             </div>
         </div>
     </div>
-   
+    <!-- Edit/Update Modal -->
+    <div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-1/2 max-h-screen overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold">edit button</h2>
+                <button id="closeEditModal" class="text-gray-600 hover:text-gray-800">✖</button>
+            </div>
+            <form id="editForm" method="POST" onsubmit="return confirmUpdate()">
+                @csrf
+                @method('POST')
+                <input required type="hidden" name="id" id="editId">
+
+                <div class="mb-4">
+                    <label class="block mb-1"> name</label>
+                    <input required type="text" name="name" id="editname" class="w-full border p-2 rounded">
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1"> car number</label>
+                    <input required type="text" name="carnum" id="editcarnum" class="w-full border p-2 rounded">
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1"> description</label>
+                    <input required type="text" name="description" id="editdescription"
+                        class="w-full border p-2 rounded">
+                </div>
+                <div class="flex justify-end">
+                    <button type="submit" class=""> save updated version</button>
+                </div>
+            </form>
+        </div>
+    </div>
+<script>
+    document.querySelectorAll('.editBtn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.getElementById('editModal').classList.remove('hidden');
+
+            document.getElementById('editId').value = this.dataset.id;
+            document.getElementById('editname').value = this.dataset.name;
+            document.getElementById('editcarnum').value = this.dataset.carnum;
+            document.getElementById('editdescription').value = this.dataset.description;
+
+            // Update form action dynamically
+            document.getElementById('editForm').action = `car/update/${this.dataset.id}`;
+        });
+    });
+
+    document.getElementById('closeEditModal').addEventListener('click', function() {
+        document.getElementById('editModal').classList.add('hidden');
+    });
+</script>
 
 </x-app-layout>
