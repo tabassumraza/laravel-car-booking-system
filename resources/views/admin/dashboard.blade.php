@@ -46,23 +46,34 @@
             </div>
         </div>
     </div>
-    <div class="testbox">
-      <form action="{{url('addlist')}}">
-        <h1> Form for listing car </h1>
+  <div class="testbox">
+    <form action="{{ route('cars.store') }}" method="POST">
+        @csrf 
+        
+        <h1>Form for listing car</h1>
+        
         <div class="item">
-          <p>cars list</p>
-          <div class="name-item">
-            <input type="text" name="name" placeholder="Name of the car " />
-            <input type="text" name="specification" placeholder="specification" />
-          </div>
+            <p>Car Details</p>
+            <div class="name-item">
+                <input type="text" name="name" placeholder="Name of the car" required />
+                <input type="text" name="picture" placeholder="picture" />
+            </div>
         </div>
+        
         <div class="item">
-          <p>What best describes the car</p>
-          <input type="text" name="decription" required/>
+            <p>Description</p>
+            <textarea name="description" placeholder="What best describes the car" required></textarea>
         </div>
-        <div class="btn-block">
-          <button type="submit"  href="/">Send car to list</button>
+        
+        <!-- <div class="item">
+            <p>Picture URL</p>
+            <input type="text" name="picture" placeholder="Image URL (optional)" />
+        </div> -->
+        
+        <div class="flex mt-4 space-x-2">
+            <button type="submit" class="btn btn-primary">Send car to list</button>
         </div>
-      </form>
-    </div>
+    </form>
+</div>
+
 </x-app-layout>

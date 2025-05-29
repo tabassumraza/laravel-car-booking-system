@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class carlist extends Model
 {
     use HasFactory;
-    protected $primarykey = "id";
-    protected $fillable = ['name','specification','description'];
+    protected $primaryKey = "id";
+    protected $fillable = ['name','picture','description'];
 }
