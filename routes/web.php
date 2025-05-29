@@ -43,7 +43,6 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
             : redirect()->route('user.dashboard');
     })->name('dashboard');
 
-
     // User profile routes dd(User::where('is_admin', true)->count())
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
