@@ -22,7 +22,7 @@
 
                     <!-- Add New Car Button -->
                     <!-- <div class="mb-6">
-                        <a href="{{ route('cars.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">
+                        <a href="{{ route('admin.car.add') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">
                             Add New Car
                         </a>
                     </div> -->
@@ -53,7 +53,7 @@
                                                 {{ $car->name }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{ $car->picture }}
+                                                {{ $car->carnum }}
                                             </td>
                                             <td class="px-6 py-4 text-sm text-gray-500">
                                                 {{ $car->description }}

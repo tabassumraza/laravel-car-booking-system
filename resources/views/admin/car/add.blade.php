@@ -14,9 +14,15 @@
             <p>Car Details</p>
             <div class="name-item">
                 <input type="text" name="name" placeholder="Name of the car" required />
-                <input type="text" name="picture" placeholder="picture" />
             </div>
         </div>
+  <div class="item">
+            <p>Car Number</p>
+            <div class="name-item">
+                        <input type="text" name="carnum" placeholder="Car number" />
+            </div>
+        </div>
+
         
         <div class="item">
             <p>Description</p>
@@ -24,8 +30,8 @@
         </div>
         
         <!-- <div class="item">
-            <p>Picture URL</p>
-            <input type="text" name="picture" placeholder="Image URL (optional)" />
+            <p>carnum URL</p>
+            <input type="text" name="carnum" placeholder="Image URL (optional)" />
         </div> -->
         
         <div class="flex mt-4 space-x-2">

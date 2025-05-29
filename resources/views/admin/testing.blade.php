@@ -52,7 +52,7 @@
             <p>Car Details</p>
             <div class="name-item">
                 <input type="text" name="name" placeholder="Name of the car" required />
-                <input type="text" name="picture" placeholder="picture" />
+                <input type="text" name="carnum" placeholder="carnum" />
             </div>
         </div>
         
@@ -62,8 +62,8 @@
         </div>
         
         <!-- <div class="item">
-            <p>Picture URL</p>
-            <input type="text" name="picture" placeholder="Image URL (optional)" />
+            <p>carnum URL</p>
+            <input type="text" name="carnum" placeholder="Image URL (optional)" />
         </div> -->
         
         <div class="flex mt-4 space-x-2">
@@ -76,7 +76,7 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-xl font-semibold">Car Listings</h2>
-                        <a href="{{ route('cars.create') }}" class="btn btn-primary">
+                        <a href="{{ route('admin.car.add') }}" class="btn btn-primary">
                             Add New Car
                         </a>
                     </div>
@@ -87,7 +87,7 @@
                                 <thead class="bg-gray-50">
                                     <tr>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Picture</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">carnum</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                                     </tr>
@@ -97,13 +97,13 @@
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $car->name }}</td>
                                             <!-- <td class="px-6 py-4 whitespace-nowrap">
-                                                @if($car->picture)
-                                                    <img src="{{ $car->picture }}" alt="{{ $car->name }}" class="h-10">
+                                                @if($car->carnum)
+                                                    <img src="{{ $car->carnum }}" alt="{{ $car->name }}" class="h-10">
                                                 @else
                                                     No Image
                                                 @endif
                                             </td> -->
-                                            <td class="px-6 py-4">{{ Str::limit($car->picture, 50) }}</td>
+                                            <td class="px-6 py-4">{{ Str::limit($car->carnum, 50) }}</td>
 
                                             <td class="px-6 py-4">{{ Str::limit($car->description, 50) }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap">

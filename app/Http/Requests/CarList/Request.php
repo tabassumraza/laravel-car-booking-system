@@ -26,7 +26,7 @@ class Request extends FormRequest
     //     return [
     //         $this->name => ["required","string","max:255"],
     //         $this->description => ["required","string"],
-    //         $this->picture => ["required","string"],
+    //         $this->carnum => ["required","string"],
     //     ];
     // }
     public function rules(): array
@@ -34,7 +34,7 @@ class Request extends FormRequest
     return [
         'name' => ['required', 'string', 'max:255'],
         'description' => ['required', 'string'],
-        'picture' => ['required', 'string'],
+        'carnum' => ['required', 'string'],
     ];
 }
 }

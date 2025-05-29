@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CarListController;
+use App\Http\Controllers\RemoveController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,11 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
    
      Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 //     // Add more admin routes here
+Route::post('car/remove', [RemoveController::class, 'deleteCar'])->name('admin.car.remove');
+Route::put('car/update/{id}', [CarListController::class, 'update'])->name('admin.car.update');
+
+
+
 });
 
 // Authenticated user routes (both admin and regular users)
@@ -55,7 +61,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
             return view('user.dashboard', compact('cars'));
         })->name('user.dashboard');
         
-        Route::get('/addlist', [CarListController::class, 'create'])->name('cars.create');
+        Route::get('/addlist', [CarListController::class, 'create'])->name('admin.car.add');
         Route::post('/addlist', [CarListController::class, 'store'])->name('cars.store');
     });
 });

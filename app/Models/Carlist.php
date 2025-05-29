@@ -9,5 +9,5 @@ class Carlist extends Model
 {
     use HasFactory;
     protected $primaryKey = "id";
-    protected $fillable = ['name','picture','description'];
+    protected $fillable = ['name','carnum','description'];
 }
