@@ -12,8 +12,7 @@ class AdminController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        // $this->middleware('admin');
-        // issue 
+        $this->middleware('admin');
     }
 
     /**
@@ -31,7 +30,7 @@ class AdminController extends Controller
         // dd('here');
         return view('admin.dashboard', [
             'userCount' => User::count(),
-            // 'adminCount' => User::where('is_admin', true)->count(),
+            'adminCount' => User::where('is_admin', true)->count(),
             'recentUsers' => User::latest()->take(5)->get()
         ]);
     }

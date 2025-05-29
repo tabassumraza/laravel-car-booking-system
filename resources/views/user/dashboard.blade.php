@@ -19,16 +19,16 @@
                     <p class="text-lg mb-4">Welcome back, <span class="font-semibold">{{ Auth::user()->name }}</span>!</p>
 
                     <!-- Add New Car Button -->
-                    <div class="mb-6">
+                    <!-- <div class="mb-6">
                         <a href="{{ route('cars.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">
                             Add New Car
                         </a>
-                    </div>
+                    </div> -->
 
                     <!-- Cars List Section -->
                     <h2 class="text-xl font-semibold mb-4">List of Cars</h2>
 
-                    @if(isset($carl) && $carl->count() > 0)
+                    @if(isset($cars) && $cars->count() > 0)
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
@@ -37,7 +37,7 @@
                                             Name
                                         </th>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Specification
+                                            specification
                                         </th>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Description
@@ -45,13 +45,13 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    @foreach($carl as $car)
+                                    @foreach($cars as $car)
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                                 {{ $car->name }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{ $car->specification }}
+                                                {{ $car->picture }}
                                             </td>
                                             <td class="px-6 py-4 text-sm text-gray-500">
                                                 {{ $car->description }}
