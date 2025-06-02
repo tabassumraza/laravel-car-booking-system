@@ -156,7 +156,6 @@
         document.querySelectorAll('.editBtn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.getElementById('editModal').classList.remove('hidden');
-
                 document.getElementById('editId').value = this.dataset.id;
                 document.getElementById('editname').value = this.dataset.name;
                 document.getElementById('editcarnum').value = this.dataset.carnum;
