@@ -17,12 +17,31 @@
                 </div>
             </div>
             
-            <div class="item">
+            <!-- <div class="item">
                 <p>Car Number</p>
                 <div class="name-item">
                     <input type="text" name="carnum" placeholder="Car number" required />
                 </div>
-            </div>
+            </div> -->
+<div class="item">
+    <label for="carnum">Car Number</label>
+     <div class="name-item">
+    <input 
+        type="number" 
+        name="carnum" 
+        id="carnum" 
+        class="form-control @error('carnum') is-invalid @enderror" 
+        value="{{ old('carnum', $car->carnum ?? '') }}"
+        required
+    >
+    
+    @error('carnum')
+        <span class="invalid-feedback" role="alert">
+            <strong>This car number already exist </strong>
+        </span>
+    @enderror
+</div>
+</div>
             
             <div class="item">
                 <p>Status</p>

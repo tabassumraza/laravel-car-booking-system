@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\Carlist;
 use App\Http\Requests\BookingCarRequest; 
-
 use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
@@ -32,5 +31,26 @@ class BookingController extends Controller
         $car->update(['status' => 'booked']);
 
         return redirect()->route('user.dashboard')->with('success', 'Car booked successfully!');
+    }
+      public function cancel(Booking $booking)
+    {
+        // Authorization - ensure user can only cancel their own bookings
+        if ($booking->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Only allow cancellation if booking is still active
+        if ($booking->status !== 'booked') {
+            return back()->with('error', 'This booking cannot be cancelled.');
+        }
+
+        // Update booking status
+        $booking->update(['status' => 'cancelled']);
+
+        // Update car status back to available
+        $booking->car->update(['status' => 'available']);
+
+        return redirect()->route('user.dashboard')
+            ->with('success', 'Booking cancelled successfully!');
     }
 }

@@ -19,22 +19,19 @@ class Request extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    // public function rules(): array
-    // {
-    //             // Validate input
-
-    //     return [
-    //         $this->name => ["required","string","max:255"],
-    //         $this->description => ["required","string"],
-    //         $this->carnum => ["required","string"],
-    //     ];
-    // }
+    
     public function rules(): array
 {
     return [
         'name' => ['required', 'string', 'max:255'],
         'description' => ['required', 'string'],
-        'carnum' => ['required', 'numeric'],
+        // 'carnum' => ['required', 'numeric'],
+                'carnum' => ['required', 'numeric','unique:carlists'],
+        //  'carnum' => [
+        //     'required',
+        //     'numeric',
+        //     Rule::unique('carlists')->ignore($this->route('car')), // For update forms
+        // ],
         'status' => 'sometimes|string|in:available,booked' 
 
     ];
