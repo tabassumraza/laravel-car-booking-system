@@ -4,7 +4,7 @@
             {{ __('Your Dashboard') }}
         </h2>
     </x-slot>
-    
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Success Message -->
@@ -16,7 +16,8 @@
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <p class="text-lg mb-4">Welcome back, <span class="font-semibold">{{ Auth::user()->name }}</span>!</p>
+                    <p class="text-lg mb-4">Welcome back, <span class="font-semibold">{{ Auth::user()->name }}</span>!
+                    </p>
 
                     <!-- Available Cars Section -->
                     <h2 class="text-xl font-semibold mb-4">Available Cars</h2>
@@ -26,16 +27,20 @@
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Name
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Car Number
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Description
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                                             Actions
                                         </th>
                                     </tr>
@@ -56,7 +61,8 @@
                                                 <form action="{{ route('user.bookings.store') }}" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="car_id" value="{{ $car->id }}">
-                                                    <button type="submit" class="text-blue-600 hover:text-blue-900">BOOK CAR</button>
+                                                    <button type="submit" class="text-blue-600 hover:text-blue-900">BOOK
+                                                        CAR</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -80,20 +86,25 @@
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Car Name
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Car Number
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Booking Date
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                                             Status
                                         </th>
-                                          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                            Action 
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Action
                                         </th>
                                     </tr>
                                 </thead>
@@ -112,17 +123,18 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 {{ ucfirst($booking->status) }}
                                             </td>
-                                          
-                                      
+
+
                                             <td>
-                                            <form action="{{ route('user.bookings.cancel', $booking) }}" method="POST">
-    @csrf
-    @method('POST') 
-    <button type="submit" class="text-red-600 hover:text-red-900"
-        onclick="return confirm('Are you sure you want to cancel this booking?')">
-        Cancel Booking
-    </button>
-</form> <td>
+                                                <form action="{{ route('user.bookings.cancel', $booking) }}" method="POST">
+                                                    @csrf
+                                                    @method('POST')
+                                                    <button type="submit" class="text-red-600 hover:text-red-900"
+                                                        onclick="return confirm('Are you sure you want to cancel this booking?')">
+                                                        Cancel Booking
+                                                    </button>
+                                                </form>
+                                            <td>
                                         </tr>
                                     @endforeach
                                 </tbody>
