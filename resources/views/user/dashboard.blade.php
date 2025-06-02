@@ -123,12 +123,9 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 {{ ucfirst($booking->status) }}
                                             </td>
-
-
                                             <td>
                                                 <form action="{{ route('user.bookings.cancel', $booking) }}" method="POST">
                                                     @csrf
-                                                    @method('POST')
                                                     <button type="submit" class="text-red-600 hover:text-red-900"
                                                         onclick="return confirm('Are you sure you want to cancel this booking?')">
                                                         Cancel Booking
