@@ -30,7 +30,6 @@
                     <select name="status" class=" p-2 border rounded" required>
                         <option value="available" selected>Available</option>
                         <option value="booked">Booked</option>
-                        <option value="maintenance">Maintenance</option>
                     </select>
                 </div>
             </div>
