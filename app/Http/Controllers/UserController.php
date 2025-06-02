@@ -14,20 +14,21 @@ class UserController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function dashboard()
-    {
-        // Get available cars (using Eloquent model)
-        $availableCars = Carlist::where('status', 'available')->get();
-        
-        // Get user's bookings with car information
-        $userBookings = Booking::with('car')
-                             ->where('user_id', auth()->id())
-                             ->orderBy('created_at', 'desc')
-                             ->get();
+   // In your controller where you load the dashboard
+public function dashboard()
+{
+    $availableCars = Carlist::where('status', 'available')->get();
+    
+    // get bookings 
+    $userBookings = Booking::with('car')
+                          ->where('user_id', auth()->id())
+                          ->where('status', 'booked') // Only show active bookings
+                          ->orderBy('created_at', 'desc')
+                          ->get();
 
-        return view('user.dashboard', [
-            'availableCars' => $availableCars,
-            'userBookings' => $userBookings
-        ]);
-    }
+    return view('user.dashboard', [
+        'availableCars' => $availableCars,
+        'userBookings' => $userBookings
+    ]);
+}
 }

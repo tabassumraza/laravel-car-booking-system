@@ -15,7 +15,7 @@ return new class extends Migration
     $table->id();
     $table->foreignId('user_id')->constrained()->onDelete('cascade');
     $table->foreignId('car_id')->constrained()->onDelete('cascade');
-    $table->string('status')->default('booked'); // can be 'booked', 'returned', 'cancelled'
+    $table->string('status')->default('booked'); 
     $table->timestamps();
 });
     }

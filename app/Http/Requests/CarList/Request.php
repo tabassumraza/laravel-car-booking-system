@@ -3,7 +3,7 @@
 namespace App\Http\Requests\CarList;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Validation\Rule;
 class Request extends FormRequest
 {
     /**
@@ -25,7 +25,12 @@ class Request extends FormRequest
     return [
         'name' => ['required', 'string', 'max:255'],
         'description' => ['required', 'string'],
-        'carnum' => ['required', 'numeric','unique:carlists'],
+        // 'carnum' => ['required', 'numeric','unique:carlists'],
+           'carnum' => [
+            'required',
+            'numeric',
+            Rule::unique('carlists')->ignore($this->route('id'))
+        ],
         'status' => 'sometimes|string|in:available,booked' 
 
     ];
