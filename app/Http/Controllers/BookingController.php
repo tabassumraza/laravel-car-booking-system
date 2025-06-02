@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Carlist;
-use Illuminate\Http\Request;
+use App\Http\Requests\BookingCarRequest; 
+
 use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
-    public function store(Request $request)
+    public function store(BookingCarRequest $request)
     {
-        $request->validate([
-            'car_id' => 'required|exists:carlists,id'
-        ]);
+      
+        // validation is hadled in request file 
 
         $car = Carlist::findOrFail($request->car_id);
 
