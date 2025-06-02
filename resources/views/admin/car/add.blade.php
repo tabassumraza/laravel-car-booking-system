@@ -16,21 +16,29 @@
                     <input type="text" name="name" placeholder="Name of the car" required />
                 </div>
             </div>
+            
             <div class="item">
                 <p>Car Number</p>
                 <div class="name-item">
-                    <input type="text" name="carnum" placeholder="Car number" />
+                    <input type="text" name="carnum" placeholder="Car number" required />
                 </div>
             </div>
+            
+            <div class="item">
+                <p>Status</p>
+                <div class="name-item">
+                    <select name="status" class=" p-2 border rounded" required>
+                        <option value="available" selected>Available</option>
+                        <option value="booked">Booked</option>
+                        <option value="maintenance">Maintenance</option>
+                    </select>
+                </div>
+            </div>
+            
             <div class="item">
                 <p>Description</p>
                 <textarea name="description" placeholder="What best describes the car" required></textarea>
             </div>
-
-            <!-- <div class="item">
-            <p>carnum URL</p>
-            <input type="text" name="carnum" placeholder="Image URL (optional)" />
-        </div> -->
 
             <div class="flex mt-4 space-x-2">
                 <button type="submit" class="btn btn-primary">Send car to list</button>

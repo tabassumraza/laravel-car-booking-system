@@ -16,6 +16,8 @@ return new class extends Migration
              $table->string('name',50);
              $table->string('description',500);
              $table->string('carnum',100);
+            $table->string('status')->default('available'); 
+
             $table->timestamps();
         });
     }
@@ -27,4 +29,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('carlists');
     }
+    
 };
