@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('carlists', function (Blueprint $table) {
             $table->id();
-             $table->string('name',50);
-             $table->string('description',500);
-             $table->string('carnum',100);
+            $table->string('name',50);
+            $table->string('description',500);
+            //  $table->string('carnum',100);
+            $table->integer('carnum',100)->unique()->change();
             $table->string('status')->default('available'); 
 
             $table->timestamps();

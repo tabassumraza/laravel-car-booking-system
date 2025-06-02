@@ -52,7 +52,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Dashboard and booking routes
         Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
         Route::post('/bookings', [BookingController::class, 'store'])->name('user.bookings.store');
-        
+        Route::post('/user/bookings/{booking}/cancel', [BookingController::class, 'cancel'])->name('user.bookings.cancel');
         // Car management routes (consider if these should be admin-only)
         Route::get('/addlist', [CarListController::class, 'create'])->name('admin.car.add');
         Route::post('/addlist', [CarListController::class, 'store'])->name('cars.store');

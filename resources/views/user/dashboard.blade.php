@@ -92,6 +92,9 @@
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                                             Status
                                         </th>
+                                          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Action 
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -109,6 +112,17 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 {{ ucfirst($booking->status) }}
                                             </td>
+                                          
+                                      
+                                            <td>
+                                            <form action="{{ route('user.bookings.cancel', $booking) }}" method="POST">
+    @csrf
+    @method('POST') 
+    <button type="submit" class="text-red-600 hover:text-red-900"
+        onclick="return confirm('Are you sure you want to cancel this booking?')">
+        Cancel Booking
+    </button>
+</form> <td>
                                         </tr>
                                     @endforeach
                                 </tbody>
