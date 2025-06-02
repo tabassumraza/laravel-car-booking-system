@@ -74,10 +74,10 @@ class Booking extends Model
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeCompleted($query)
-    {
-        return $query->where('status', 'completed');
-    }
+    // public function scopeCompleted($query)
+    // {
+    //     return $query->where('status', 'completed');
+    // }
 
     /**
      * Check if booking is active.

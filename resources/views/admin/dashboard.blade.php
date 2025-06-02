@@ -121,7 +121,6 @@
             </div>
             <form id="editForm" method="POST" onsubmit="return confirmUpdate()">
                 @csrf
-                @method('PUT')
                 <input required type="hidden" name="id" id="editId">
 
                 <div class="mb-4">
@@ -145,7 +144,7 @@
                     <textarea name="description" id="editdescription" class="w-full border p-2 rounded"></textarea>
                 </div>
                 <div class="flex justify-end">
-                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    <button type="submit" class="px-4 py-2 bg-blue-500 text-black rounded hover:bg-blue-600">
                         Save Changes
                     </button>
                 </div>
