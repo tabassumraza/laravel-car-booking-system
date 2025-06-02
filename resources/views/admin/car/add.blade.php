@@ -16,13 +16,6 @@
                     <input type="text" name="name" placeholder="Name of the car" required />
                 </div>
             </div>
-
-            <!-- <div class="item">
-                <p>Car Number</p>
-                <div class="name-item">
-                    <input type="text" name="carnum" placeholder="Car number" required />
-                </div>
-            </div> -->
             <div class="item">
                 <label for="carnum">Car Number</label>
                 <div class="name-item">
