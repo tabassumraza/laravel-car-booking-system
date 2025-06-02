@@ -34,7 +34,9 @@ class Request extends FormRequest
     return [
         'name' => ['required', 'string', 'max:255'],
         'description' => ['required', 'string'],
-        'carnum' => ['required', 'string'],
+        'carnum' => ['required', 'numeric'],
+        'status' => 'sometimes|string|in:available,booked' 
+
     ];
 }
 }

@@ -4,9 +4,7 @@
             {{ __('Your Dashboard') }}
         </h2>
     </x-slot>
-    <div>
-        <p>To book car PLEASE CHECK the list of the cars </p>
-    </div>
+    
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Success Message -->
@@ -18,43 +16,32 @@
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <p class="text-lg mb-4">Welcome back, <span class="font-semibold">{{ Auth::user()->name }}</span>!
-                    </p>
+                    <p class="text-lg mb-4">Welcome back, <span class="font-semibold">{{ Auth::user()->name }}</span>!</p>
 
-                    <!-- Add New Car Button -->
-                    <!-- <div class="mb-6">
-                        <a href="{{ route('admin.car.add') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">
-                            Add New Car
-                        </a>
-                    </div> -->
+                    <!-- Available Cars Section -->
+                    <h2 class="text-xl font-semibold mb-4">Available Cars</h2>
 
-                    <!-- Cars List Section -->
-                    <h2 class="text-xl font-semibold mb-4">List of Cars</h2>
-
-                    @if(isset($cars) && $cars->count() > 0)
-                        <div class="overflow-x-auto">
+                    @if($availableCars->count() > 0)
+                        <div class="overflow-x-auto mb-8">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Name
                                         </th>
-                                        <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            specification
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Car Number
                                         </th>
-                                        <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Description
                                         </th>
-                                        <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Actions
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    @foreach($cars as $car)
+                                    @foreach($availableCars as $car)
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                                 {{ $car->name }}
@@ -65,8 +52,12 @@
                                             <td class="px-6 py-4 text-sm text-gray-500">
                                                 {{ $car->description }}
                                             </td>
-                                            <td class="px-6 py-4 text-sm text-gray-500">
-                                                <button type="submit" class="text-red-500 hover:underline">BOOK CAR</button>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                <form action="{{ route('user.bookings.store') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="car_id" value="{{ $car->id }}">
+                                                    <button type="submit" class="text-blue-600 hover:text-blue-900">BOOK CAR</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -74,22 +65,60 @@
                             </table>
                         </div>
                     @else
-                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
-                            <div class="flex">
-                                <div class="flex-shrink-0">
-                                    <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd"
-                                            d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm text-yellow-700">
-                                        No cars found in the database.
-                                    </p>
-                                </div>
-                            </div>
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-8">
+                            <p class="text-sm text-yellow-700">
+                                No available cars at the moment.
+                            </p>
+                        </div>
+                    @endif
+
+                    <!-- My Bookings Section -->
+                    <h2 class="text-xl font-semibold mb-4">My Bookings</h2>
+
+                    @if($userBookings->count() > 0)
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Car Name
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Car Number
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Booking Date
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Status
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    @foreach($userBookings as $booking)
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                {{ $booking->car->name }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                {{ $booking->car->carnum }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                {{ $booking->created_at->format('M d, Y H:i') }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                {{ ucfirst($booking->status) }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
+                            <p class="text-sm text-blue-700">
+                                You haven't booked any cars yet.
+                            </p>
                         </div>
                     @endif
                 </div>
