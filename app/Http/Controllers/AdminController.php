@@ -30,7 +30,7 @@ class AdminController extends Controller
             'userCount' => User::count(),
             'adminCount' => User::where('is_admin', true)->count(),
             'recentUsers' => User::latest()->take(5)->get(),
-                'cars' => Carlist::all() // Get all cars
+            'cars' => Carlist::all() // Get all cars
 
         ]);
     }
