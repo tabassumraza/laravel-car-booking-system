@@ -22,7 +22,7 @@ class BookingCarRequest extends FormRequest
     public function rules(): array
     {
         return [
-        'car_id' => 'required|exists:carlists,id'
+        'car_id' => 'required|exists:carlists,id',
 
         ];
     }
