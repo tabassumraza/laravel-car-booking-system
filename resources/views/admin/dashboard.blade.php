@@ -4,12 +4,12 @@
             Admin Dashboard
         </h2>
     </x-slot>
-  <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                href="{{ route('admin.users.create') }}">
-                {{ __('Registered New Account') }}
-            </a>
-        </div>
+    <div class="flex items-center justify-end mt-4">
+        <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+            href="{{ route('admin.users.create') }}">
+            {{ __('Registered New Account') }}
+        </a>
+    </div>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Stats and Recent Users Section -->
@@ -41,21 +41,22 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->created_at->diffForHumans() }}</td>
-                                        <td>  <form action="{{ route('admin.user.remove') }}" method="POST"
-                                                    class="inline-block ml-2" >
-                                                    @csrf
-                                                    <input required type="hidden" value="{{ $user->id }}" name="">
-                                                    <button type="submit"
-                                                        class="text-red-500 hover:underline">DELETE🗑️</button></td>
-                                                          <td class="px-6 py-4 whitespace-nowrap">
-                                                <!-- BUTTON TO EDIT CAR DETAILS -->
-                                                <button class="text-blue-500 hover:underline editBtn inline-block"
-                                                    data-id="{{ $user->id }}" 
-                                                    data-name="{{ $user->name }}"
-                                                    data-email="{{ $user->email }}" 
-                                                    >
-                                                    EDIT✏️
-                                                </button></td>
+                                        <td>
+                                            <form action="{{ route('admin.user.remove') }}" method="POST"
+                                                class="inline-block ml-2">
+                                                @csrf
+                                                <input required type="hidden" value="{{ $user->id }}" name="">
+                                                <button type="submit"
+                                                    class="text-red-500 hover:underline">DELETE🗑️</button>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <!-- BUTTON TO EDIT CAR DETAILS -->
+                                            <button class="text-blue-500 hover:underline editBtn inline-block"
+                                                data-id="{{ $user->id }}" data-name="{{ $user->name }}"
+                                                data-email="{{ $user->email }}">
+                                                EDIT✏️
+                                            </button>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -79,11 +80,16 @@
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Car Number</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Car
+                                            Number</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Description</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -92,8 +98,9 @@
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $car->name }}</td>
                                             <td class="px-6 py-4">{{ $car->carnum }}</td>
                                             <td class="px-6 py-4">
-                                                <span class="px-2 py-1 text-xs rounded-full 
-                                                    {{ $car->status === 'available' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                                <span
+                                                    class="px-2 py-1 text-xs rounded-full 
+                                                            {{ $car->status === 'available' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
                                                     {{ ucfirst($car->status) }}
                                                 </span>
                                             </td>
@@ -101,10 +108,8 @@
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <!-- BUTTON TO EDIT CAR DETAILS -->
                                                 <button class="text-blue-500 hover:underline editBtn inline-block"
-                                                    data-id="{{ $car->id }}" 
-                                                    data-name="{{ $car->name }}"
-                                                    data-carnum="{{ $car->carnum }}" 
-                                                    data-status="{{ $car->status }}"
+                                                    data-id="{{ $car->id }}" data-name="{{ $car->name }}"
+                                                    data-carnum="{{ $car->carnum }}" data-status="{{ $car->status }}"
                                                     data-description="{{ $car->description }}">
                                                     EDIT✏️
                                                 </button>
@@ -175,7 +180,7 @@
 
     <script>
         document.querySelectorAll('.editBtn').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 document.getElementById('editModal').classList.remove('hidden');
                 document.getElementById('editId').value = this.dataset.id;
                 document.getElementById('editname').value = this.dataset.name;
@@ -188,7 +193,7 @@
             });
         });
 
-        document.getElementById('closeEditModal').addEventListener('click', function() {
+        document.getElementById('closeEditModal').addEventListener('click', function () {
             document.getElementById('editModal').classList.add('hidden');
         });
 
