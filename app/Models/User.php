@@ -21,8 +21,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-    ];
+        'is_admin', // Add this
 
+    ];
+        // Add this method
+    public function isAdmin()
+    {
+        return $this->is_admin === true; // or == 1 if you're using integer
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -32,7 +38,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
+    
     /**
      * The attributes that should be cast.
      *

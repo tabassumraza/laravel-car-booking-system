@@ -7,6 +7,7 @@ use App\Http\Controllers\CarListController;
 use App\Http\Controllers\RemoveController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\Admin\AdminUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,10 +28,13 @@ Route::get('/', function () {
 require __DIR__.'/auth.php';
 
 // Admin routes
-Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::post('car/remove', [RemoveController::class, 'deleteCar'])->name('admin.car.remove');
     Route::post('car/update/{id}', [CarListController::class, 'update'])->name('admin.car.update');
+        Route::get('/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
+        Route::post('/users/store', [AdminUserController::class, 'store'])->name('admin.users.store');
+
 });
 
 // Authenticated user routes (both admin and regular users)
