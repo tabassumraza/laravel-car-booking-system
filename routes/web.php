@@ -34,6 +34,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('car/update/{id}', [CarListController::class, 'update'])->name('admin.car.update');
         Route::get('/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
         Route::post('/users/store', [AdminUserController::class, 'store'])->name('admin.users.store');
+    Route::post('user/remove', [RemoveController::class, 'deleteUser'])->name('admin.user.remove');
+        Route::post('user/update/{id}', [CarListController::class, 'update'])->name('admin.user.update');
 
 });
 
