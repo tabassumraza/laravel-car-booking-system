@@ -19,6 +19,17 @@
                     <p class="text-lg mb-4">Welcome back, <span class="font-semibold">{{ Auth::user()->name }}</span>!
                     </p>
 
+                  
+                    @if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
                     <!-- Available Cars Section -->
                     <h2 class="text-xl font-semibold mb-4">Available Cars</h2>
 

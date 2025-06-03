@@ -23,7 +23,11 @@ class BookingCarRequest extends FormRequest
     {
         return [
         'car_id' => 'required|exists:carlists,id',
-
         ];
+    }
+
+    public function messages()  { 
+        return[
+        'car_id.required' => 'Please enter',];
     }
 }
