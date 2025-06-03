@@ -17,13 +17,7 @@ class AdminController extends Controller
     /**
      * Display admin dashboard
      */
-//     public function dashboard()
-// {
-//     if (!auth()->user()->is_admin) {
-//         abort(403, 'Unauthorized action.');
-//     }
-//     return view('admin.dashboard');
-// }
+
     public function dashboard()
     {
         return view('admin.dashboard', [
