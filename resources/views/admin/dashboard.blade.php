@@ -32,6 +32,7 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Joined</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,6 +41,21 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->created_at->diffForHumans() }}</td>
+                                        <td>  <form action="{{ route('admin.user.remove') }}" method="POST"
+                                                    class="inline-block ml-2" >
+                                                    @csrf
+                                                    <input required type="hidden" value="{{ $user->id }}" name="">
+                                                    <button type="submit"
+                                                        class="text-red-500 hover:underline">DELETE🗑️</button></td>
+                                                          <td class="px-6 py-4 whitespace-nowrap">
+                                                <!-- BUTTON TO EDIT CAR DETAILS -->
+                                                <button class="text-blue-500 hover:underline editBtn inline-block"
+                                                    data-id="{{ $user->id }}" 
+                                                    data-name="{{ $user->name }}"
+                                                    data-email="{{ $user->email }}" 
+                                                    >
+                                                    EDIT✏️
+                                                </button></td>
                                     </tr>
                                 @endforeach
                             </tbody>

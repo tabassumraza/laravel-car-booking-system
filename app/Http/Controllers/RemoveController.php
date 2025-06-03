@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Carlist;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RemoveController extends Controller
@@ -13,5 +14,11 @@ class RemoveController extends Controller
     
            return redirect()->back();        
 }
-
+  public function deleteUser(Request $request)
+{
+    user::destroy($request->id); // This deletes the record by ID
+    session()->flash('success', 'user removed successfully!');
+    
+           return redirect()->back();        
+}
 }

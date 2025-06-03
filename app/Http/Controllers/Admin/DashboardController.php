@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
@@ -11,7 +12,7 @@ class DashboardController extends Controller
         return view('admin.dashboard', [
             'stats' => [
                 'users' => User::count(),
-                'revenue' => Order::sum('amount'),
+                // 'revenue' => Order::sum('amount'),
             ]
         ]);
     }
