@@ -11,4 +11,9 @@ class Carlist extends Model
     protected $primaryKey = "id";
     protected $fillable = ['name','carnum','description','status'];
     protected $attributes = ['status' => 'available' ];
+
+     public function booking()
+    {
+        return $this->hasMany(Booking::class);
+    }
 }

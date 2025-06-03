@@ -6,31 +6,41 @@ use App\Models\Booking;
 use App\Models\Carlist;
 use App\Http\Requests\BookingCarRequest; 
 use Illuminate\Support\Facades\Auth;
+use App\Services\BookingService;
+use Exception;
 
 class BookingController extends Controller
 {
+
+    protected  $bookingService; 
+   public function __construct() {
+        $this->bookingService = new BookingService();
+    }
     public function store(BookingCarRequest $request)
     {
-      
-        // validation is hadled in request file 
-
+          // validation is handled in bookingrequest file 
+        // create booking is handled in bookingservice file
         $car = Carlist::findOrFail($request->car_id);
 
         if ($car->status !== 'available') {
             return back()->with('error', 'This car is not available for booking.');
         }
 
-        // Create the booking
-        $booking = Booking::create([
-            'user_id' => Auth::id(),
-            'car_id' => $car->id,
-            'status' => 'booked'
-        ]);
-
+        // ERROR HANDLING and RENDERING MESSAGE FOR BOOKING CARS 
+        try {
+            $this->bookingService->create($car);
+            $car->update(['status' => 'booked']);
+            
+            return redirect()->route('user.dashboard')
+                ->with('success', 'Car booked successfully!');
+                
+        } catch (Exception $e) {
+            return back()->with('error', 'Failed to create booking: ' . $e->getMessage());
+        }
         // Update car status
-        $car->update(['status' => 'booked']);
+        // $car->update(['status' => 'booked']);
 
-        return redirect()->route('user.dashboard')->with('success', 'Car booked successfully!');
+        // return redirect()->route('user.dashboard')->with('success', 'Car booked successfully!');
     }
       public function cancel(Booking $booking)
     {
