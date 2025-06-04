@@ -21,7 +21,7 @@ use App\Http\Controllers\Admin\AdminUserController;
 */
 
 Route::get('/', function () {
-    return view('auth.register');
+    return view('auth.login');
 });
 
 // Authentication routes
@@ -30,13 +30,15 @@ require __DIR__.'/auth.php';
 // Admin routes
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    // ADMIN car management routes
     Route::post('car/remove', [RemoveController::class, 'deleteCar'])->name('admin.car.remove');
     Route::post('car/update/{id}', [CarListController::class, 'update'])->name('admin.car.update');
-        Route::get('/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
-        Route::post('/users/store', [AdminUserController::class, 'store'])->name('admin.users.store');
-    // Route::post('user/remove', [RemoveController::class, 'deleteUser'])->name('admin.user.remove');
-    // Route::post('user/update/{id}', [CarListController::class, 'update'])->name('admin.user.update');
-
+    // ADMIN User management routes
+    Route::get('/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
+    Route::post('/users/store', [AdminUserController::class, 'store'])->name('admin.users.store');
+    Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
+    Route::delete('/users/{user}', [RemoveController::class, 'destroy'])->name('admin.users.destroy');
 });
 
 // Authenticated user routes (both admin and regular users)

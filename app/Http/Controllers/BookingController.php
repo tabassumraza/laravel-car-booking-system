@@ -48,7 +48,7 @@ class BookingController extends Controller
         if ($booking->user_id !== Auth::id()) {
             abort(403, 'Unauthorized action.');
         }
-
+        
         // Only allow cancellation if booking is still active
         if ($booking->status !== 'booked') {
             return back()->with('error', 'This booking cannot be cancelled.');

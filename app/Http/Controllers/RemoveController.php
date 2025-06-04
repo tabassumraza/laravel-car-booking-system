@@ -14,11 +14,9 @@ class RemoveController extends Controller
     
            return redirect()->back();        
 }
-  public function deleteUser(Request $request)
+ public function destroy(User $user)
 {
-    user::destroy($request->id); // This deletes the record by ID
-    session()->flash('success', 'user removed successfully!');
-    
-           return redirect()->back();        
+    $user->delete();
+    return redirect()->back()->with('success', 'User deleted successfully');
 }
 }

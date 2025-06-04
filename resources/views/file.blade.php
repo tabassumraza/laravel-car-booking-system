@@ -29,7 +29,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Success Message -->
             @if(session('success'))
-                <div class="mb-4 px-4 py-3 bg-green-100 border border-green-400 text-green-700 round ath lets have the --ifdoh my back hurts what to --ifdo i am tired of preteding that i am working  lets pretend to work a little and dont be sus --if ok so 1 and the half hour left for the hutti and i am getting dead bore  i took the half wave of the sysytem somethimes i dont feel like working  we put on i can do this anymor estill ed">
+                <div class="mb-4 px-4 py-3 bg-green-100 border border-green-400 text-green-700 round  so in this file i have to work in a flow so if the low is working ad you ahve to pretend like working keep doing it active ath lets have the --ifdoh my back hurts what to --ifdo i am tired of preteding that i am working  lets pretend to work a little and dont be sus --if ok so 1 and the half hour left for the hutti and i am getting dead bore  i took the half wave of the sysytem somethimes i dont feel like working  we put on i can do this anymor estill ed">
                     {{ session('failed',"the user is denied") }}
                 </div>
             @endif
