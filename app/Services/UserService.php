@@ -20,12 +20,7 @@ class UserService
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-
-        // Assign role if using spatie/laravel-permission
-        if (isset($data['role'])) {
-            $user->assignRole($data['role']);
-        }
-
+     
         return $user;
     }
 }
