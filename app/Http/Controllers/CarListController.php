@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Carlist;
 use App\Http\Requests\CarList\Request as CarListRequest;
 use App\Services\CarListServices;
 

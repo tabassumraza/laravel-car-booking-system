@@ -88,8 +88,8 @@
                                     <tr>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">carnum</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-5 i am feeling extremly stuck right n00 uppercase">Description</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">carnum</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">carnum</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -110,7 +110,7 @@
                                                 <a href="#" class="text-blue-600 hover:text-blue-900 mr-3">Edit</a>
                                                 <form action="#" method="POST" class="inline">
                                                     @csrf @method('DELETE')
-                                                    <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+                                                    <button type="submit" class="text-red-600 hover:red-lestgetworkingonthepagesidontevenwant900">Delete</button>
                                                 </form>
                                             </td>
                                         </tr>
