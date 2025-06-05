@@ -2,6 +2,8 @@
 
 namespace App\Services;
 use App\Models\Carlist; 
+use Illuminate\Support\Collection;
+
 
 class CarListServices{
 
@@ -33,12 +35,8 @@ class CarListServices{
             return $car;
     }
     // In CarListServices.php
-public function getAllCarsWithUsers()
+public function getAllCarsWithUsers(): Collection   
 {
     return $this->model->with('users')->latest()->get();
 }
-    //     public function getAllCarsWithUsers()
-    // {
-    //     return $this->model->with('currentUser')->latest()->get();
-    // }
 }

@@ -17,10 +17,10 @@ class CarListController extends Controller
     }
     // render the username who booked the car in carlist table
     public function index()
-{
-    $cars = $this->CarListService->getAllCarsWithUsers();
-    return view('admin.car.index', compact('cars')); 
-}
+    {
+        $cars = $this->CarListService->getAllCarsWithUsers(); 
+        return view('admin.car.index', compact('cars'));
+    }
     // Show the form to create a new car listing
     public function create()
     {
@@ -29,16 +29,14 @@ class CarListController extends Controller
 
     // Store a new car listing
     public function store(CarListRequest $request)
-    { 
+    {
         $this->CarListService->storeCar($request->validated());
         return redirect()->back()->with('success', 'Car listing added successfully!');
     }
 
     public function update(CarListRequest $request, $id)
     {
-        $this->CarListService->updateCarListing($id,$request->validated());
+        $this->CarListService->updateCarListing($id, $request->validated());
         return redirect()->back()->with('success', 'EDITING COMPLETE');
     }
-
-
 }

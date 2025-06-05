@@ -88,7 +88,7 @@
                     @endforeach
                 </tbody>
             </table>
-        </div>
+            
         
         @if($recentUsers->isEmpty())
             <div class="text-center py-8 text-gray-500">
