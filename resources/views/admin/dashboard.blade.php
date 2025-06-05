@@ -140,7 +140,7 @@
                                 <td class="px-6 py-4 text-sm text-gray-500">
                                     {{ Str::limit($car->description, 50) }}
                                 </td>
-                                <td >
+                                <td class="px-6 py-4 text-sm text-gray-500">
                                     @foreach($car->users as $user)
                                         {{ $user->name }}@if(!$loop->last), @endif
                                     @endforeach
