@@ -97,7 +97,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form-text">at least 8 characters should have number and alphabets </div>
+                            <div class="form-text">at least 8 characters should have number,alphabet,uppercase,lowercase and special characters </div>
                         </div>
 
                         <!-- Confirm Password Field -->
