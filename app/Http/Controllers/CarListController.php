@@ -15,10 +15,11 @@ class CarListController extends Controller
     {
         $this->CarListService = new CarListServices();
     }
+    // render the username who booked the car in carlist table
     public function index()
 {
     $cars = $this->CarListService->getAllCarsWithUsers();
-    return view('admin.car.index', compact('cars')); // Adjust view name as needed
+    return view('admin.car.index', compact('cars')); 
 }
     // Show the form to create a new car listing
     public function create()
@@ -38,11 +39,6 @@ class CarListController extends Controller
         $this->CarListService->updateCarListing($id,$request->validated());
         return redirect()->back()->with('success', 'EDITING COMPLETE');
     }
-//     public function index(CarListServices $carService)
-// {
-//     $cars = $carService->getAllCarsWithUsers();
-//     return view('your.view', compact('cars'));
-// }
-// In CarListController.php
+
 
 }
