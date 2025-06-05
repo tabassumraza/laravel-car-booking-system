@@ -24,7 +24,6 @@ class CarListServices{
     public function updateCarListing($id, array $carData)
     {
             $car = $this->model->findOrFail($id);
-            
             $car->update([
                 'name' => $carData['name'],
                 'description' => $carData['description'],
@@ -33,6 +32,11 @@ class CarListServices{
             ]);
             return $car;
     }
+    // In CarListServices.php
+public function getAllCarsWithUsers()
+{
+    return $this->model->with('users')->latest()->get();
+}
     //     public function getAllCarsWithUsers()
     // {
     //     return $this->model->with('currentUser')->latest()->get();

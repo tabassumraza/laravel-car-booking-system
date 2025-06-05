@@ -104,7 +104,7 @@
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-xl font-semibold text-gray-800">Car Listings</h2>
             <a href="{{ route('admin.car.add') }}" 
-               class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors">
+               class="px-4 py-2 bg-indigo-600 text-black rounded-md hover:bg-indigo-700 transition-colors">
                 + Add New Car
             </a>
         </div>
@@ -140,14 +140,12 @@
                                 <td class="px-6 py-4 text-sm text-gray-500">
                                     {{ Str::limit($car->description, 50) }}
                                 </td>
-                                 
-                                <td> @if($car->user_id)
-                                {{ $car->user_id->name }}
-                            @else
-                                Not booked
-                            @endif
-                            </td> 
-                              
+                                <td >
+                                    @foreach($car->users as $user)
+                                        {{ $user->name }}@if(!$loop->last), @endif
+                                    @endforeach
+                                </td>
+
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <div class="flex space-x-3">
                                         <button class="text-indigo-600 hover:text-indigo-900 editBtn transition-colors"

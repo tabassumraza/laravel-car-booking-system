@@ -33,6 +33,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     // ADMIN car management routes
     Route::post('car/remove', [RemoveController::class, 'deleteCar'])->name('admin.car.remove');
     Route::post('car/update/{id}', [CarListController::class, 'update'])->name('admin.car.update');
+   Route::get('/cars', [CarListController::class, 'index'])->name('cars.index');
     // ADMIN User management routes
     Route::get('/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
     Route::post('/users/store', [AdminUserController::class, 'store'])->name('admin.users.store');

@@ -15,6 +15,11 @@ class CarListController extends Controller
     {
         $this->CarListService = new CarListServices();
     }
+    public function index()
+{
+    $cars = $this->CarListService->getAllCarsWithUsers();
+    return view('admin.car.index', compact('cars')); // Adjust view name as needed
+}
     // Show the form to create a new car listing
     public function create()
     {
@@ -38,4 +43,6 @@ class CarListController extends Controller
 //     $cars = $carService->getAllCarsWithUsers();
 //     return view('your.view', compact('cars'));
 // }
+// In CarListController.php
+
 }
