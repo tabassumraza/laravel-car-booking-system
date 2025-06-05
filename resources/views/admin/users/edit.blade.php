@@ -53,9 +53,8 @@
                         </div> -->
 
                         <!-- <div class="mb-4">
-                            <label for="update_password_password" class="block text-sm font-medium text-gray-700">New
-                                Password</label>
-                            <input type="password" id="update_password_password" name="password"
+                            <label for="password" class="block text-sm font-medium text-gray-700">New Password</label>
+                            <input type="password" id="password" name="password"
                                 autocomplete="new-password"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                             @if($errors->updatePassword->get('password'))
@@ -65,12 +64,12 @@
                                     @endforeach
                                 </div>
                             @endif
-                        </div>
+                        </div> -->
 
-                        <div class="mb-4">
-                            <label for="update_password_password_confirmation"
+                        <!-- <div class="mb-4">
+                            <label for="password_confirmation"
                                 class="block text-sm font-medium text-gray-700">Confirm Password</label>
-                            <input type="password" id="update_password_password_confirmation"
+                            <input type="password" id="password_confirmation"
                                 name="password_confirmation" autocomplete="new-password"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                             @if($errors->updatePassword->get('password_confirmation'))
