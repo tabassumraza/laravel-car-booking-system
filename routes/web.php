@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CarListController;
-use App\Http\Controllers\RemoveController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Admin\AdminUserController;
@@ -31,7 +30,7 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     // ADMIN car management routes
-    Route::post('car/remove', [RemoveController::class, 'deleteCar'])->name('admin.car.remove');
+    Route::post('car/remove', [AdminController::class, 'deleteCar'])->name('admin.car.remove');
     Route::post('car/update/{id}', [CarListController::class, 'update'])->name('admin.car.update');
    Route::get('/cars', [CarListController::class, 'index'])->name('cars.index');
     // ADMIN User management routes
@@ -39,7 +38,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/users/store', [AdminUserController::class, 'store'])->name('admin.users.store');
     Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
     Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
-    Route::delete('/users/{user}', [RemoveController::class, 'destroy'])->name('admin.users.destroy');
+    Route::delete('/users/{user}', [AdminController::class, 'destroy'])->name('admin.users.destroy');
 });
 
 // Authenticated user routes (both admin and regular users)
