@@ -41,4 +41,5 @@ public function users()
         'user_id'  // Local key on bookings table
     );
 }
+
 }

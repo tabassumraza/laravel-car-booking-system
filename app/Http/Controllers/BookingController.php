@@ -21,7 +21,7 @@ class BookingController extends Controller
     {
         // validation is handled in bookingrequest file 
         // create booking is handled in bookingservice file
-        
+
         $car = Carlist::findOrFail($request->car_id);
 
         if ($car->status !== 'available') {
@@ -39,8 +39,10 @@ class BookingController extends Controller
         } catch (Exception $e) {
             return back()->with('error', 'Failed to create booking: ' . $e->getMessage());
         }
-        // Update car status
-        // $car->update(['status' => 'booked']);
+        //     if ($request->status === 'available') {
+        //     $booking->delete(); // or soft delete
+        //     return back()->with('success', 'Booking canceled and removed.');
+        // }
     }
     public function cancel(Booking $booking)
     {
