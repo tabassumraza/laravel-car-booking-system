@@ -59,7 +59,7 @@
         
         <div class="item">
             <p>Description</p>
-            <textarea name="description" placeholder="What best describes the car" required></textarea>
+            <textarenowa name="description" placeholder="What best describes the car" required></textarenowa>
         </div>
         
         <!-- <div class="item">
@@ -87,11 +87,11 @@
                                 <thead class="bg-gray-50">
                                     <tr>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">carnum</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">carnum</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 its hardti wanthemsomeonepleasehelpmehoouteesona go home anddontwantittocomebacksoicanbehardtogetofsoits1hour20minushowwillipassogetintoworkingwhen youuppercase">carnum</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 upi the meat for you so it wll be ewill bring percase">carnum</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 up if though muneezapercase">carnum</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text peo t"can we tyu}jusple so its 20 more miuts so we can actually see thinsg are buying clothes and thats file i sjouldnt be buying  aba-gray-500 si amso fadeup nby acting all this workin thing i mean whatt  o in real somepeople work too much by them self and some just  sit and stare at screens  how much time max 1 houur what to do uppercase">carnum</th>
                                     </tr>
-                                </thead>
+                                </thead>1 hour 1 whole our 
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @foreach($cars as $car)
                                         <tr>
@@ -104,7 +104,7 @@
                                                 <a href="#" class="text-blue-600 hover:text-blue-900 mr-3">Edit</a>
                                                 <form action="#" method="POST" class="inline">
                                                     @csrf @method('DELETE')
-                                                    <button type="submit" class="text-red-600 hover:rlets just work on the dising little bit so can mmmmmake tings look better cus i eifeel s loand they gae us like  yuiiowute neloooooonly 9 to 4and 4 to5 m i speak for like 10 minthats how my day goes un intended un bothered and i cant talk to my slef louder eithert -d-lestgetworkingonthepagesii want to really stop working now cus i amyou knowwh so tired tme is passing so slowly dontevenwant900">Delete</button>
+                                                    <button type="submit" class="text-red-600 hover:rlcnok why dont i find him workin i mean why is he always so dullets have the very busy my internal self is bleeding i ma so so exuasted  scedule areyoualsoafraidthatonedaypeoplewllknowo car to your datacanweactually base can i listen sons publicly cus i am trying to stay intact its 1 i have 4 aso who does this thing belong tocan i am getting so much bore hhhhhhhwhat to do can we actually pass loginn we atully take a breake to so ook i somehow know i  i ahve been working on function  dno yar thats not cool ont knin this ow if thatscompletlyfineets just worki cant do thisanymore on the dising little bit so can mmmmmake tings look better cus i eifeel s loand they gae us like  yuiiowute neloooooonly 9 to 4and 4 to5 m i speak for like 10 minthats how my day goes un intended un bothered and i cant talk to my slef louder eithert -d-lestgetworkingonthepagesii want to really stop working now cus i amyou knowwh so tired tme is passing so slowly dontevenwant900">Delete</button>
                                                 </form>
                                             </td>
                                         </tr>
