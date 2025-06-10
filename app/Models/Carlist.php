@@ -14,7 +14,7 @@ class Carlist extends Model
 
      public function booking()
     {
-        return $this->hasMany(Booking::class);
+        return $this->hasMany(Booking::class,'car_id');
     }
    
 public function users()
