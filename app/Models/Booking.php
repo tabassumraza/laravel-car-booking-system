@@ -74,11 +74,7 @@ class Booking extends Model
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    // public function scopeCompleted($query)
-    // {
-    //     return $query->where('status', 'completed');
-    // }
-
+   
     /**
      * Check if booking is active.
      *
@@ -88,4 +84,15 @@ class Booking extends Model
     {
         return $this->status === 'booked';
     }
+    // app/Models/Booking.php
+protected static function booted()
+{
+    static::deleted(function ($booking) {
+        // When a booking is deleted, check if car has any other bookings
+        $car = $booking->car;
+        if ($car && !$car->bookings()->exists()) {
+            $car->update(['status' => 'available']);
+        }
+    });
+}
 }
