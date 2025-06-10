@@ -53,22 +53,6 @@ public function update(UserUpdateRequest $request, User $user)
     $user->update($request->validated());
     return redirect()->route('admin.dashboard')->with('success', 'User updated successfully');
 }
-// public function update(UserUpdateRequest $request, User $user)
-// {
-//     $validated = $request->validated();
-    
-//     // Only update password if it was provided
-//     if (!empty($validated['password'])) {
-//         $validated['password'] = Hash::make($validated['password']);
-//     } else {
-//         // Remove password from array if not provided
-//         unset($validated['password']);
-//     }
-    
-//     $user->update($validated);
-    
-//     return redirect()->route('admin.dashboard')->with('success', 'User updated successfully');
-// }
 
 
 }
