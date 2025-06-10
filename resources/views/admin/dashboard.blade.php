@@ -227,7 +227,6 @@
                     <select name="status" id="editstatus" class="w-full border p-2 rounded">
                         <option value="available">Available</option>
                         <option value="booked">Booked</option>
-                        <option value="maintenance">Maintenance</option>
                     </select>
                 </div>
                 <div class="mb-4">

@@ -89,20 +89,14 @@
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">carnum</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">carnum</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">carnum</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 its hardti wanthemsomeonepleasehelpmehoouteesona go home anddontwantittocomebacksoicanbehardtogetofsoits1hour20minushowwillipassogetintoworkingwhen youuppercase">carnum</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @foreach($cars as $car)
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $car->name }}</td>
-                                            <!-- <td class="px-6 py-4 whitespace-nowrap">
-                                                @if($car->carnum)
-                                                    <img src="{{ $car->carnum }}" alt="{{ $car->name }}" class="h-10">
-                                                @else
-                                                    No Image
-                                                @endif
-                                            </td> -->
+                                           
                                             <td class="px-6 py-4">{{ Str::limit($car->carnum, 50) }}</td>
 
                                             <td class="px-6 py-4">{{ Str::limit($car->description, 50) }}</td>
@@ -110,7 +104,7 @@
                                                 <a href="#" class="text-blue-600 hover:text-blue-900 mr-3">Edit</a>
                                                 <form action="#" method="POST" class="inline">
                                                     @csrf @method('DELETE')
-                                                    <button type="submit" class="text-red-600 hover:red-lestgetworkingonthepagesidontevenwant900">Delete</button>
+                                                    <button type="submit" class="text-red-600 hover:rlets just work on the dising little bit so can mmmmmake tings look better cus i eifeel s loand they gae us like  yuiiowute neloooooonly 9 to 4and 4 to5 m i speak for like 10 minthats how my day goes un intended un bothered and i cant talk to my slef louder eithert -d-lestgetworkingonthepagesii want to really stop working now cus i amyou knowwh so tired tme is passing so slowly dontevenwant900">Delete</button>
                                                 </form>
                                             </td>
                                         </tr>

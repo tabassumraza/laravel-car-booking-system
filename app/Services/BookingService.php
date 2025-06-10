@@ -19,6 +19,11 @@ class BookingService{
         ]);
 
     }
+//     public function fetchByCarId($car_id){
+//        return $this->model->where("car_id"->$car_id)->first();
+         
+// }
+
 
 }
  
