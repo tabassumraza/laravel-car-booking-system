@@ -60,35 +60,6 @@ class CarListServices{
     return $car;
 }
 
-
-//    public function updateCarListing($id, array $carData)
-// {
-//     $car = $this->model->findOrFail($id);
-  
-    
-//     // Check if status is being changed to 'booked'
-//     $statusChangedToBooked = ($carData['status'] == 'booked') && ($car->status != 'booked');
-    
-//     $car->update([
-//         'name' => $carData['name'],
-//         'user_id' => auth()->id(), // Admin's ID
-//         'description' => $carData['description'],
-//         'carnum' => $carData['carnum'] ?? null,
-//         'status' => $carData['status']
-//     ]);
-    
-//     // Create booking record if status changed to booked
-//     if ($statusChangedToBooked) {
-//         Booking::create([
-//             'car_id' => $car->id,
-//             'user_id' => auth()->id(), // Admin's ID
-//             'status' => 'booked',
-//             'admin_booked' => true // Optional flag to distinguish admin bookings
-//         ]);
-//     }
-    
-//     return $car;
-// }
   public function getAllCarsWithUsers(): Collection   
 {
     return $this->model->with('users')->latest()->get();
