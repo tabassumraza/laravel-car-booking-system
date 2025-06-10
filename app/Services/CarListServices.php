@@ -33,7 +33,7 @@ class CarListServices{
         // Delete or cancel the booking
         Booking::where('car_id', $car->id)
                ->where('status', 'booked')
-               ->delete(); // or ->update(['status' => 'cancelled']);
+               ->delete(); 
     }
     
     // Check if status is being changed to 'booked'
