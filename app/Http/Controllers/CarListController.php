@@ -36,6 +36,7 @@ class CarListController extends Controller
     public function update(CarListRequest $request, $id)
     {
         $this->CarListService->updateCarListing($id, $request->validated());
-        return redirect()->back()->with('success', 'EDITING COMPLETE');
+        // return redirect()->back()->with('success', 'EDITING COMPLETE');
+        return response()->json(['success' => true]);
     }
 }

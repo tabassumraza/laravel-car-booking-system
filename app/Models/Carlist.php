@@ -22,10 +22,10 @@ public function users()
     return $this->hasManyThrough(
         User::class,
         Booking::class,
-        'car_id',  // Foreign key on bookings table
-        'id',      // Foreign key on users table
-        'id',      // Local key on carlists table
-        'user_id'  // Local key on bookings table
+        'car_id',  
+        'id',      
+        'id',      
+        'user_id'  
     );
 }
 

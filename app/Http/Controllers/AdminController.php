@@ -6,12 +6,25 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\Carlist;
+use App\Models\Setting;
+// use App\Http\Requests\Admin\UpdateUserRequest;
+// use App\Http\Requests\Admin\UpdateSettingsRequest;
+// use App\Services\AdminService;
+
+
 class AdminController extends Controller
 {
+    //   protected $AdminService;
+   
     public function __construct()
     {
+
+        // $this->AdminService = new AdminService();
+
         $this->middleware('auth');
         $this->middleware('admin');
+
+
     }
 
     /**
@@ -24,7 +37,7 @@ class AdminController extends Controller
             'userCount' => User::count(),
             'adminCount' => User::where('is_admin', true)->count(),
             'recentUsers' => User::latest()->take(5)->get(),
-            'cars' => Carlist::all() // Get all cars
+            'cars' => Carlist::all() 
 
         ]);
     }
@@ -62,6 +75,13 @@ class AdminController extends Controller
         return redirect()->route('admin.users')
                ->with('success', 'User updated successfully');
     }
+    //    public function updateUser(UpdateUserRequest $request, User $user): RedirectResponse
+    // {
+    //     $this->adminService->updateUser($user, $request->validated());
+
+    //     return redirect()->route('admin.users')
+    //         ->with('success', 'User updated successfully');
+    // }
 
     /**
      * Delete user
@@ -77,7 +97,15 @@ class AdminController extends Controller
         return redirect()->route('admin.users')
                ->with('success', 'User deleted successfully');
     }
+    // public function destroyUser(User $user): RedirectResponse
+    // {
+    //     if (!$this->adminService->deleteUser($user)) {
+    //         return back()->with('error', 'You cannot delete yourself!');
+    //     }
 
+    //     return redirect()->route('admin.users')
+    //         ->with('success', 'User deleted successfully');
+    // }
     /**
      * Show admin settings
      */
@@ -85,7 +113,7 @@ class AdminController extends Controller
     {
         return view('admin.settings');
     }
-
+   
     /**
      * Update admin settings
      */
@@ -103,12 +131,12 @@ class AdminController extends Controller
         } else {
             // Alternative storage method (database, config, etc.)
             // For example, using the database:
-            \App\Models\Setting::updateOrCreate(
+            Setting::updateOrCreate(
                 ['key' => 'site_name'],
                 ['value' => $validated['site_name']]
             );
             
-            \App\Models\Setting::updateOrCreate(
+            Setting::updateOrCreate(
                 ['key' => 'maintenance_mode'],
                 ['value' => $validated['maintenance_mode']]
             );
@@ -116,6 +144,13 @@ class AdminController extends Controller
 
         return back()->with('success', 'Settings updated successfully');
     }
+
+    //     public function updateSettings(UpdateSettingsRequest $request): RedirectResponse
+    // {
+    //     $this->adminService->updateSettings($request->validated());
+
+    //     return back()->with('success', 'Settings updated successfully');
+    // }
     public function deleteCar(Request $request)
     {
         Carlist::destroy($request->id); 
@@ -123,6 +158,12 @@ class AdminController extends Controller
 
         return redirect()->back();
     }
+    //    public function deleteCar(\Illuminate\Http\Request $request): RedirectResponse
+    // {
+    //     $this->adminService->deleteCar($request->id);
+
+    //     return back()->with('success', 'Car removed successfully!');
+    // }
    
 public function destroy(User $user)
 {

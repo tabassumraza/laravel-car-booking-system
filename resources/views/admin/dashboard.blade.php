@@ -236,9 +236,6 @@
                         @endif
                     </div>
                 </div>
-
-
-
             </div>
         </div>
 
@@ -282,23 +279,67 @@
         </div>
 
         <script>
-            document.querySelectorAll('.editBtn').forEach(btn => {
-                btn.addEventListener('click', function () {
-                    document.getElementById('editModal').classList.remove('hidden');
-                    document.getElementById('editId').value = this.dataset.id;
-                    document.getElementById('editname').value = this.dataset.name;
-                    document.getElementById('editcarnum').value = this.dataset.carnum;
-                    document.getElementById('editstatus').value = this.dataset.status;
-                    document.getElementById('editdescription').value = this.dataset.description;
+         
 
-                    // Update form action dynamically
-                    document.getElementById('editForm').action = `/admin/car/update/${this.dataset.id}`;
-                });
+            $(document).ready(function() {
+    // Edit button click handlers
+    $('.editBtn').click(function() {
+        // Show modal
+        $('#editModal').removeClass('hidden');
+        
+        // Populate form fields from data attributes
+        $('#editId').val($(this).data('id'));
+        $('#editname').val($(this).data('name'));
+        $('#editcarnum').val($(this).data('carnum'));
+        $('#editstatus').val($(this).data('status'));
+        $('#editdescription').val($(this).data('description'));
+        
+        // Update form action
+        const updateUrl = `/admin/car/update/${$(this).data('id')}`;
+        $('#editForm').attr('action', updateUrl);
+        
+        // Modify form submission to use AJAX
+        $('#editForm').off('submit').on('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading indicator
+            $('#submitBtn').prop('disabled', true).text('Updating...');
+            
+            $.ajax({
+                url: $(this).attr('action'),
+                method: 'POST',
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function(response) {
+                    // Hide modal
+                    $('#editModal').addClass('hidden');
+                    
+                    // Show success message
+                    alert('Car updated successfully!');
+                    
+                    // Refresh the page or update UI dynamically
+                    window.location.reload();
+                },
+                error: function(xhr) {
+                    // Show error message
+                    alert('Error: ' + (xhr.responseJSON?.message || 'Failed to update car'));
+                    
+                    // Re-enable button
+                    $('#submitBtn').prop('disabled', false).text('Update');
+                },
+                complete: function() {
+                    // Always re-enable button when request finishes
+                    $('#submitBtn').prop('disabled', false).text('Update');
+                }
             });
+        });
+    });
 
-            document.getElementById('closeEditModal').addEventListener('click', function () {
-                document.getElementById('editModal').classList.add('hidden');
-            });
+    // Close modal handler
+    $('#closeEditModal').click(function() {
+        $('#editModal').addClass('hidden');
+    });
+});
 
             function confirmDelete() {
                 return confirm('Are you sure you want to delete this car?');
@@ -307,8 +348,6 @@
             function confirmUpdate() {
                 return confirm('Are you sure you want to update this car?');
             }
-
-
 
         </script>
 </x-app-layout>
