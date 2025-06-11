@@ -247,6 +247,7 @@
                     <button id="closeEditModal" class="text-gray-600 hover:text-gray-800">✖</button>
                 </div>
                 <form id="editForm" method="POST" onsubmit="return confirmUpdate()">
+                    <meta name="csrf-token" content="{{ csrf_token() }}">
                     @csrf
                     <input required type="hidden" name="id" id="editId">
 
@@ -308,6 +309,7 @@
             $.ajax({
                 url: $(this).attr('action'),
                 method: 'POST',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 data: $(this).serialize(),
                 dataType: 'json',
                 success: function(response) {
