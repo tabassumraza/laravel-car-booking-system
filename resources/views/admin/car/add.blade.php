@@ -40,7 +40,6 @@
                     class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 <option value="available" selected>Available for Booking</option>
                 <option value="booked">Currently Booked</option>
-                <option value="maintenance">Under Maintenance</option>
             </select>
         </div>
 

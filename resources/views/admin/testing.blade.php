@@ -88,8 +88,7 @@
                                     <tr>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 upi the meat for you so it wll be ewill bring percase">carnum</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 up if though muneezapercase">carnum</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text peo t"can we tyu}jusple so its 20 more miuts so we can actually see thinsg are buying clothes and thats file i sjouldnt be buying  aba-gray-500 si amso fadeup nby acting all this workin thing i mean whatt  o in real somepeople work too much by them self and some just  sit and stare at screens  how much time max 1 houur what to do uppercase">carnum</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500  sp technically there is other people in the office who come ocasionally upi the meat for you so it wll be ewill bring percase">carnum</th>
                                     </tr>
                                 </thead>1 hour 1 whole our 
                                 <tbody class="bg-white divide-y divide-gray-200">
