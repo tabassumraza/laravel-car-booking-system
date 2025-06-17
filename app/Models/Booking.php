@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+
 
 class Booking extends Model
 {
@@ -19,7 +21,6 @@ class Booking extends Model
         'car_id',
         'status',
         'booking_date',
-        'return_date',
     ];
 
     /**
@@ -27,9 +28,12 @@ class Booking extends Model
      *
      * @var array
      */
-    protected $casts = [
+
+    
+     protected $casts = [
         'booking_date' => 'datetime',
-        'return_date' => 'datetime',
+        // 'status' => 'boolean',
+
     ];
 
     /**
@@ -39,7 +43,35 @@ class Booking extends Model
      */
     protected $attributes = [
         'status' => 'booked',
+        // 'status' => 1, // default: booked
+
     ];
+
+    //accessor and mutator 
+  
+
+    // public function getStatus($value)
+    // {
+    //     return $value ? 'booked' : 'available';
+    // }
+
+    // public function setStatus($value)
+    // {
+    //     if (strtolower($value) === 'booked' || $value === true || $value == 1) {
+    //         $this->attributes['status'] = 1;
+    //     } else {
+    //         $this->attributes['status'] = 0;
+    //     }
+    // }
+
+//  protected function status(): Attribute
+//     {
+//         // accessor(getters) and mutator(setters) to change value in DB and view 
+//         return Attribute::make(
+//             get: fn($value) => $value ? 'booked' : 'available',
+//             set: fn($value) => $value == 'available' ? 0 : 1
+//         );
+//     }
 
     /**
      * Get the user that made the booking.

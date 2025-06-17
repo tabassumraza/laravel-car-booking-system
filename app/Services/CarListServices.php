@@ -20,7 +20,9 @@ class CarListServices{
         'name' => $car['name'],
         'description' => $car['description'],
         'carnum' => $car['carnum'] ?? null,
-        'status' => $car['status'],
+        // 'status' => $car['status'],
+        'status' => $car['status'] == 'available', 
+
         'user_id' => auth()->id() 
     ]);
 

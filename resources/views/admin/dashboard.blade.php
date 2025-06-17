@@ -5,18 +5,15 @@
         </h2>
     </x-slot>
     <!-- Register a new User -->
-    <div class="flex items-center justify-end mt-4">
-        <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-            href="{{ route('admin.users.create') }}">
-            {{ __('Registered New User Account') }}
-        </a>
-    </div>
+    
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Stats and Recent Users Section -->
             <div class="md:col-span-2 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
                     <div class="flex justify-between items-center mb-6">
+                            <!-- Register a new User -->
+
                         <h3 class="text-xl font-semibold text-gray-800"> Users and Admin</h3>
                         <a href="{{ route('admin.users.create') }}"
                             class="px-4 py-2 bg-indigo-600 text-black rounded-md hover:bg-indigo-700 transition-colors">
