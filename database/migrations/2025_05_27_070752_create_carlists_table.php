@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name',50);
             $table->string('description',500);
-            $table->integer('carnum',100)->unique()->change();
+            $table->integer('carnum')->unique();
             $table->string('status')->default('available'); 
 
             $table->timestamps();
