@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Booking extends Model
 {
@@ -37,9 +38,19 @@ class Booking extends Model
      * 
      * @var string
      */
-    protected $attributes = [
-        'status' => 'booked',
-    ];
+
+    // protected $attributes = [
+    //     'status' => 'booked',
+    // ];
+    
+protected $attributes = ['status' => 0]; // Default value
+
+    protected function status(): Attribute {
+        return Attribute::make(
+            get: fn ($value) => $value ? 'available' : 'booked',
+            set: fn ($value) => $value === 'available' ? 1 : 0
+        );
+    }
 
     /**
      * Get the user that made the booking.
@@ -65,7 +76,7 @@ class Booking extends Model
      */
     public function scopeActive($query)
     {
-        return $query->where('status', 'booked');
+        return $query->where('status', 0);
     }
 
     /**
@@ -91,8 +102,12 @@ protected static function booted()
         // When a booking is deleted, check if car has any other bookings
         $car = $booking->car;
         if ($car && !$car->bookings()->exists()) {
-            $car->update(['status' => 'available']);
+            $car->update(['status' => 1,
+        'user_id'=>null
+    ]);
         }
     });
 }
+
+
 }

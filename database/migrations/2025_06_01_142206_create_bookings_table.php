@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Carlist;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,7 @@ return new class extends Migration
      Schema::create('bookings', function (Blueprint $table) {
     $table->id();
     $table->foreignId('user_id')->constrained()->onDelete('cascade');
-    $table->foreignId('car_id')->constrained()->onDelete('cascade');
+    $table->foreignId('car_id')->constrained('carlists')->onDelete('cascade');
     $table->string('status')->default('booked'); 
     $table->timestamps();
 });

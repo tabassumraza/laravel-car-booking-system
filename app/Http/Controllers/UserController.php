@@ -17,12 +17,14 @@ class UserController extends Controller
    // In your controller where you load the dashboard
 public function dashboard()
 {
-    $availableCars = Carlist::where('status', 'available')->get();
+    // $availableCars = Carlist::where('status', 'available')->get();
+            $availableCars = Carlist::where('status', true)->get();
+
     
     // get bookings 
     $userBookings = Booking::with('car')
                           ->where('user_id', auth()->id())
-                          ->where('status', 'booked') // Only show active bookings
+                          ->where('status', 0) // Only show active bookings
                           ->orderBy('created_at', 'desc')
                           ->get();
 
