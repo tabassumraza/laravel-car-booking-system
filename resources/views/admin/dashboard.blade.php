@@ -129,13 +129,13 @@
                                         <tr>
                                             <th
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Name</th>
+                                                Name of Car</th>
                                             <th
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 Car Number</th>
                                             <th
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Status</th>
+                                                Status </th>
                                             <th
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 Description</th>
