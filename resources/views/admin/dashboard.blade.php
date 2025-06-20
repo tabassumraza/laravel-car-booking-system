@@ -236,9 +236,6 @@
                         @endif
                     </div>
                 </div>
-
-
-
             </div>
         </div>
 
@@ -250,6 +247,7 @@
                     <button id="closeEditModal" class="text-gray-600 hover:text-gray-800">✖</button>
                 </div>
                 <form id="editForm" method="POST" onsubmit="return confirmUpdate()">
+                    <meta name="csrf-token" content="{{ csrf_token() }}">
                     @csrf
                     <input required type="hidden" name="id" id="editId">
 
@@ -280,7 +278,8 @@
                 </form>
             </div>
         </div>
-  <!-- <script>
+
+        <script>
          
 
             $(document).ready(function() {
@@ -351,36 +350,6 @@
             function confirmUpdate() {
                 return confirm('Are you sure you want to update this car?');
             }
-
-        </script> -->
-        <script>
-            document.querySelectorAll('.editBtn').forEach(btn => {
-                btn.addEventListener('click', function () {
-                    document.getElementById('editModal').classList.remove('hidden');
-                    document.getElementById('editId').value = this.dataset.id;
-                    document.getElementById('editname').value = this.dataset.name;
-                    document.getElementById('editcarnum').value = this.dataset.carnum;
-                    document.getElementById('editstatus').value = this.dataset.status;
-                    document.getElementById('editdescription').value = this.dataset.description;
-
-                    // Update form action dynamically
-                    document.getElementById('editForm').action = `/admin/car/update/${this.dataset.id}`;
-                });
-            });
-
-            document.getElementById('closeEditModal').addEventListener('click', function () {
-                document.getElementById('editModal').classList.add('hidden');
-            });
-
-            function confirmDelete() {
-                return confirm('Are you sure you want to delete this car?');
-            }
-
-            function confirmUpdate() {
-                return confirm('Are you sure you want to update this car?');
-            }
-
-
 
         </script>
 </x-app-layout>

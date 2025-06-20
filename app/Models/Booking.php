@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Models\Scopes\StatusScope;
+
+
 
 class Booking extends Model
 {
@@ -68,6 +71,10 @@ protected $attributes = ['status' => 0]; // Default value
         return $this->belongsTo(Carlist::class);
     }
 
+    //    protected static function booted()
+    // {
+    //     static::addGlobalScope(new StatusScope());
+    // }
     /**
      * Scope a query to only include active bookings.
      *
@@ -102,11 +109,13 @@ protected static function booted()
         // When a booking is deleted, check if car has any other bookings
         $car = $booking->car;
         if ($car && !$car->bookings()->exists()) {
-            $car->update(['status' => 1,
-        'user_id'=>null
+            $car->update([
+                'status' => 1,
+                 'user_id'=>null
     ]);
         }
     });
+        static::addGlobalScope(new StatusScope());
 }
 
 
