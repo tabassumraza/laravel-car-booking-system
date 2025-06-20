@@ -14,11 +14,10 @@
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
                         <h3 class="text-lg font-medium">Total Users</h3>
-                        <p class="text-2xl mt-2">{{ $userCount }}</p>
-                    </div>
+                        <p class="text-2xl mt-2">{{ $userCount }}</p>                  
+                                   Recent Users until muneeza come i will kepp pretenting i am working why not i am a genius and i reesllly ned to type code cus my typing is good Table
+ </div>
                 </div>
-                
-                Recent Users Table
                 <div class="md:col-span-2 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
                         <h3 class="text-lg font-medium mb-4">Recent Users</h3>
@@ -77,7 +76,7 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-xl font-semibold">Car Listings</h2>
-                        <a href="{{ route('admin.car.add') }}" class="btn btn-primary">
+                        <a href="{{ route('admin.car.add') }}" class="px-6 py-3 text-left text-xs font-medium text-grey-500 uppercase">
                             Add New Car
                         </a>
                     </div>
@@ -87,11 +86,10 @@
                                 <thead class="bg-gray-50">
                                     <tr>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 upi the meat for you so it wll be ewill bring percase">carnum</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 up if though muneezapercase">carnum</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text peo t"can we tyu}jusple so its 20 more miuts so we can actually see thinsg are buying clothes and thats file i sjouldnt be buying  aba-gray-500 si amso fadeup nby acting all this workin thing i mean whatt  o in real somepeople work too much by them self and some just  sit and stare at screens  how much time max 1 houur what to do uppercase">carnum</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">carnum</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">booking user name </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">description</th>
                                     </tr>
-                                </thead>1 hour 1 whole our 
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @foreach($cars as $car)
                                         <tr>

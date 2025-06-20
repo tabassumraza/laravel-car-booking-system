@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Scopes\scopeStatusTo;
 
 
 class Carlist extends Model
@@ -26,17 +27,16 @@ class Carlist extends Model
     {
         return $this->hasMany(Booking::class,'car_id');
     }
-   
-public function users()
-{
-    return $this->hasManyThrough(
-        User::class,
-        Booking::class,
-        'car_id',  // Foreign key on bookings table
-        'id',      // Foreign key on users table
-        'id',      // Local key on carlists table
-        'user_id'  // Local key on bookings table
-    );
-}
+    public function users()
+    {
+        return $this->hasManyThrough(
+            User::class,
+            Booking::class,
+            'car_id',  // Foreign key on bookings table
+            'id',      // Foreign key on users table
+            'id',      // Local key on carlists table
+            'user_id'  // Local key on bookings table
+        );
+    }
 
 }
