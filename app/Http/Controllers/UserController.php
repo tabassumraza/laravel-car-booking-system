@@ -24,7 +24,6 @@ public function dashboard()
     // get bookings 
     $userBookings = Booking::with('car')
                           ->where('user_id', auth()->id())
-                          ->where('status', 0) // Only show active bookings
                           ->orderBy('created_at', 'desc')
                           ->get();
 
