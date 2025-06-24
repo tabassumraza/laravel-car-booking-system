@@ -16,7 +16,6 @@ class StatusScope implements Scope
 
     {
         //namespace App\Scopes;
-
         $builder->where('status', 0);
     }
 }
