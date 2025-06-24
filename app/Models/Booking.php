@@ -45,13 +45,14 @@ class Booking extends Model
     // protected $attributes = [
     //     'status' => 'booked',
     // ];
-    
-protected $attributes = ['status' => 0]; // Default value
 
-    protected function status(): Attribute {
+    protected $attributes = ['status' => 0]; // Default value
+
+    protected function status(): Attribute
+    {
         return Attribute::make(
-            get: fn ($value) => $value ? 'available' : 'booked',
-            set: fn ($value) => $value === 'available' ? 1 : 0
+            get: fn($value) => $value ? 'available' : 'booked',
+            set: fn($value) => $value === 'available' ? 1 : 0
         );
     }
 
@@ -71,10 +72,6 @@ protected $attributes = ['status' => 0]; // Default value
         return $this->belongsTo(Carlist::class);
     }
 
-    //    protected static function booted()
-    // {
-    //     static::addGlobalScope(new StatusScope());
-    // }
     /**
      * Scope a query to only include active bookings.
      *
@@ -92,7 +89,7 @@ protected $attributes = ['status' => 0]; // Default value
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-   
+
     /**
      * Check if booking is active.
      *
@@ -103,20 +100,20 @@ protected $attributes = ['status' => 0]; // Default value
         return $this->status === 'booked';
     }
     // app/Models/Booking.php
-protected static function booted()
-{
-    static::deleted(function ($booking) {
-        // When a booking is deleted, check if car has any other bookings
-        $car = $booking->car;
-        if ($car && !$car->bookings()->exists()) {
-            $car->update([
-                'status' => 1,
-                 'user_id'=>null
-    ]);
-        }
-    });
+    protected static function booted()
+    {
+        static::deleted(function ($booking) {
+            // When a booking is deleted, check if car has any other bookings
+            $car = $booking->car;
+            if ($car && !$car->bookings()->exists()) {
+                $car->update([
+                    'status' => 1,
+                    'user_id' => null
+                ]);
+            }
+        });
         static::addGlobalScope(new StatusScope());
-}
+    }
 
 
 }

@@ -18,6 +18,8 @@ class BookingController extends Controller
     public function __construct()
     {
         $this->bookingService = new BookingService();
+        $this->carlistService = new CarListServices();
+
     }
     public function store(BookingCarRequest $request)
     {

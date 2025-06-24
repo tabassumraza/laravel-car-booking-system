@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use App\Scopes\scopeStatusTo;
+use App\Scopes\StatusScope;
 
 
 class Carlist extends Model
@@ -38,5 +38,9 @@ class Carlist extends Model
             'user_id'  // Local key on bookings table
         );
     }
+    // protected static function booted(){
+    //     static::addGlobalScope(new StatusScope());
+
+    // }
 
 }
