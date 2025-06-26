@@ -108,6 +108,6 @@ class CarListServices
 
     public function getAllCarsWithUsers(): Collection
     {
-        return $this->model->with('users')->latest()->get();
+        return $this->model->with('users','booking')->latest()->get();
     }
 }

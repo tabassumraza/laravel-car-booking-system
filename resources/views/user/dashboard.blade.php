@@ -48,9 +48,9 @@
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                                             Booking Type
                                         </th>
-                                        <!-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                                             Availability
-                                        </th> -->
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -84,9 +84,9 @@
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                <!-- <button onclick="openHourlyModal('{{ $car->id }}')" class="text-indigo-600 hover:text-indigo-900">
+                                                <button onclick="openHourlyModal('{{ $car->id }}')" class="text-indigo-600 hover:text-indigo-900">
                                                     View Available Slots
-                                                </button> -->
+                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach

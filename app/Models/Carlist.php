@@ -43,6 +43,11 @@ class Carlist extends Model
     {
         return $this->hasMany(Booking::class,'car_id');
     }
+//     public function userBookings()
+// {
+//     return $this->hasMany(Booking::class, 'car_id');
+// }
+
     public function users()
     {
         return $this->hasManyThrough(

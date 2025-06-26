@@ -138,6 +138,9 @@
                                                 Status </th>
                                             <th
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                type </th>
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 Description</th>
                                             <th
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -163,6 +166,24 @@
                                                         {{ ucfirst($car->status) }}
                                                     </span>
                                                 </td>
+                                              
+                                                
+                                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            @if($car->booking && $car->booking->isNotEmpty())
+                                                @foreach($car->booking as $booking)
+                                                    @if($booking->is_hourly)
+                                                        {{ $booking->booking_date ? $booking->booking_date->format('M d, Y') : 'N/A' }}<br>
+                                                        {{ $booking->start_time ?? 'N/A' }} - {{ $booking->end_time ?? 'N/A' }}
+                                                    @else
+                                                        {{ $booking->created_at ? $booking->created_at->format('M d, Y') : 'N/A' }}
+                                                    @endif
+                                                    <br><br> {{-- space between bookings --}}
+                                                @endforeach
+                                            @else
+                                                <span class="text-gray-400 text-xs">No Bookings</span>
+                                            @endif
+                                        </td>
+
                                                 <td class="px-6 py-4 text-sm text-gray-500">
                                                     {{ Str::limit($car->description, 50) }}
                                                 </td>
