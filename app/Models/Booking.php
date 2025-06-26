@@ -5,22 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-
+use App\Models\Scopes\StatusScope;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Booking extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'user_id',
         'car_id',
         'status',
         'booking_date',
+        'return_date',
     ];
 
     /**
@@ -28,12 +27,9 @@ class Booking extends Model
      *
      * @var array
      */
-
-    
-     protected $casts = [
+    protected $casts = [
         'booking_date' => 'datetime',
-        // 'status' => 'boolean',
-
+        'return_date' => 'datetime',
     ];
 
     /**
@@ -43,35 +39,7 @@ class Booking extends Model
      */
     protected $attributes = [
         'status' => 'booked',
-        // 'status' => 1, // default: booked
-
     ];
-
-    //accessor and mutator 
-  
-
-    // public function getStatus($value)
-    // {
-    //     return $value ? 'booked' : 'available';
-    // }
-
-    // public function setStatus($value)
-    // {
-    //     if (strtolower($value) === 'booked' || $value === true || $value == 1) {
-    //         $this->attributes['status'] = 1;
-    //     } else {
-    //         $this->attributes['status'] = 0;
-    //     }
-    // }
-
-//  protected function status(): Attribute
-//     {
-//         // accessor(getters) and mutator(setters) to change value in DB and view 
-//         return Attribute::make(
-//             get: fn($value) => $value ? 'booked' : 'available',
-//             set: fn($value) => $value == 'available' ? 0 : 1
-//         );
-//     }
 
     /**
      * Get the user that made the booking.
@@ -81,50 +49,122 @@ class Booking extends Model
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get the car that was booked.
-     */
     public function car()
     {
         return $this->belongsTo(Carlist::class);
     }
 
-    /**
-     * Scope a query to only include active bookings.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function scopeActive($query)
     {
-        return $query->where('status', 'booked');
+        return $query->where('status', 0);
     }
 
-    /**
-     * Scope a query to only include completed bookings.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-   
-    /**
-     * Check if booking is active.
-     *
-     * @return bool
-     */
+    public function scopeHourly($query)
+    {
+        return $query->where('is_hourly', true);
+    }
+
+    public function scopeDaily($query)
+    {
+        return $query->where('is_hourly', false);
+    }
+
     public function isActive()
     {
         return $this->status === 'booked';
     }
-    // app/Models/Booking.php
-protected static function booted()
-{
-    static::deleted(function ($booking) {
-        // When a booking is deleted, check if car has any other bookings
-        $car = $booking->car;
-        if ($car && !$car->bookings()->exists()) {
-            $car->update(['status' => 'available']);
+
+    public function isCurrentlyActive()
+    {
+        if (!$this->is_hourly) return false;
+        
+        $now = now();
+        $bookingDate = Carbon::parse($this->booking_date);
+        $start = Carbon::parse($this->start_time);
+        $end = Carbon::parse($this->end_time);
+        
+        return $now->isSameDay($bookingDate) && 
+               $now->between($start, $end);
+    }
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new StatusScope());
+
+        static::deleted(function ($booking) {
+            if ($booking->car && !$booking->car->bookings()->active()->exists()) {
+                $booking->car->update([
+                    'status' => 1,
+                    'user_id' => null
+                ]);
+            }
+        });
+    }
+
+    public static function SlotAvailable($carId, $startTime, $endTime, $ignoreId = null)
+    {
+        $query = self::where('car_id', $carId)
+            // ->where('status', 0)
+            ->where(function($q) use ($startTime, $endTime) {
+                $q->whereBetween('start_time', [$startTime, $endTime])
+                  ->orWhereBetween('end_time', [$startTime, $endTime])
+                  ->orWhere(function($q) use ($startTime, $endTime) {
+                      $q->where('start_time', '<', $startTime)
+                        ->where('end_time', '>', $endTime);
+                  });
+            });
+        
+        if ($ignoreId) {
+            $query->where('id', '!=', $ignoreId);
         }
-    });
-}
+        
+        return $query->doesntExist();
+    }
+
+    public static function createHourlyBooking(array $data)
+    {
+        return DB::transaction(function () use ($data) {
+            $car = Carlist::findOrFail($data['car_id']);
+            
+            $start = Carbon::parse($data['start_time']);
+            $end = $start->copy()->addHours($data['duration_hours']);
+            
+            if (!$car->isAvailableDuring($start->format('H:i'), $end->format('H:i'))) {
+                throw new \Exception('Car not available during requested hours');
+            }
+            
+            if (!self::SlotAvailable($data['car_id'], $start->format('H:i'), $end->format('H:i'))) {
+                throw new \Exception('Time slot already booked');
+            }
+            
+            return self::create([
+                'user_id' => Auth::id(),
+                'car_id' => $data['car_id'],
+                'booking_date' => $data['booking_date'],
+                'start_time' => $start->format('H:i'),
+                'end_time' => $end->format('H:i'),
+                'duration_hours' => $data['duration_hours'],
+                'is_hourly' => true,
+                'status' => 0
+            ]);
+        });
+    }
+
+    public static function getAvailableSlots($carId, $date)
+    {
+        $car = Carlist::findOrFail($carId);
+        $bookedSlots = self::where('car_id', $carId)
+            ->whereDate('booking_date', $date)
+            // ->where('status', 0)
+            ->get(['start_time', 'end_time']);
+        
+       
+        return $car;
+    }
+
+    // protected function generateTimeSlots($car, $bookedSlots)
+    // {
+    //     // Implement your time slot generation algorithm
+    //     // Considering car availability and existing bookings
+    // }
 }

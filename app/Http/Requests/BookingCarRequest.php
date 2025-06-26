@@ -23,6 +23,8 @@ class BookingCarRequest extends FormRequest
     {
         return [
         'car_id' => 'required|exists:carlists,id',
+         'booking_type' => 'required|in:daily,hourly',
+        // Add conditional rules for hourly bookings
         ];
     }
 
@@ -30,4 +32,5 @@ class BookingCarRequest extends FormRequest
         return[
         'car_id.required' => 'Please enter',];
     }
+    
 }

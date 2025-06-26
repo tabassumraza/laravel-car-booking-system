@@ -5,7 +5,11 @@
         </h2>
     </x-slot>
     <!-- Register a new User -->
+<<<<<<< HEAD
     
+=======
+  
+>>>>>>> 19d8695a8b100776f171a08146252b8fd8ced28f
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Stats and Recent Users Section -->
@@ -131,13 +135,16 @@
                                         <tr>
                                             <th
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Name</th>
+                                                Name of Car</th>
                                             <th
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 Car Number</th>
                                             <th
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Status</th>
+                                                Status </th>
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                type </th>
                                             <th
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 Description</th>
@@ -165,6 +172,22 @@
                                                         {{ ucfirst($car->status) }}
                                                     </span>
                                                 </td>
+                                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            @if($car->booking && $car->booking->isNotEmpty())
+                                                @foreach($car->booking as $booking)
+                                                    @if($booking->is_hourly)
+                                                        {{ $booking->booking_date ? $booking->booking_date->format('M d, Y') : 'N/A' }}<br>
+                                                        {{ $booking->start_time ?? 'N/A' }} - {{ $booking->end_time ?? 'N/A' }}
+                                                    @else
+                                                        {{ $booking->created_at ? $booking->created_at->format('M d, Y') : 'N/A' }}
+                                                    @endif
+                                                    <br><br> {{-- space between bookings --}}
+                                                @endforeach
+                                            @else
+                                                <span class="text-gray-400 text-xs">No Bookings</span>
+                                            @endif
+                                        </td>
+
                                                 <td class="px-6 py-4 text-sm text-gray-500">
                                                     {{ Str::limit($car->description, 50) }}
                                                 </td>

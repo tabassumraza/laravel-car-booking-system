@@ -16,8 +16,17 @@ return new class extends Migration
             $table->string('name',50);
             $table->string('description',500);
             $table->integer('carnum')->unique();
+<<<<<<< HEAD
             $table->boolean('status')->default(true);
+=======
+            $table->string('status')->default('available'); 
+>>>>>>> 19d8695a8b100776f171a08146252b8fd8ced28f
 
+               // New columns for hourly booking support
+    $table->time('available_from')->default('08:00:00');
+    $table->time('available_to')->default('20:00:00');
+    $table->integer('min_booking_hours')->default(1);
+    $table->integer('max_booking_hours')->default(12);
             $table->timestamps();
         });
 

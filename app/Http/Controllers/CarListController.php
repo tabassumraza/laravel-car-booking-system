@@ -17,7 +17,7 @@ class CarListController extends Controller
     // render the username who booked the car in carlist table
     public function index()
     {
-        $cars = $this->CarListService->getAllCarsWithUsers(); 
+        $cars = $this->CarListService->getAllCarsWithUsers();
         return view('admin.car.index', compact('cars'));
     }
     // Show the form to create a new car listing
@@ -36,7 +36,6 @@ class CarListController extends Controller
     public function update(CarListRequest $request, $id)
     {
         $this->CarListService->updateCarListing($id, $request->validated());
-        // return redirect()->back()->with('success', 'EDITING COMPLETE');
         return response()->json(['success' => true]);
     }
 }
