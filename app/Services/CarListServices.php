@@ -14,36 +14,6 @@ class CarListServices
     protected $bookingService;
     public function __construct()
     {
-<<<<<<< HEAD
-        $this->model = new Carlist(); 
-    } 
-    public function storeCar($car)
-{
-    // Create the car
-    $newCar = $this->model->create([
-        'name' => $car['name'],
-        'description' => $car['description'],
-        'carnum' => $car['carnum'] ?? null,
-        // 'status' => $car['status'],
-        'status' => $car['status'] == 'available', 
-
-        'user_id' => auth()->id() 
-    ]);
-
-    // If status is booked, create booking record
-    if ($car['status'] == 'booked') {
-        Booking::create([
-            'car_id' => $newCar->id,
-            'user_id' => auth()->id(),
-            'status' => 'booked',
-            'admin_booked' => true,
-        ]);
-    }
-
-    return $newCar;
-} 
-    
-=======
         $this->model = new Carlist();
         $this->bookingService = new BookingService();
 
@@ -76,7 +46,6 @@ class CarListServices
         return $createdCar;
     }
 
->>>>>>> 19d8695a8b100776f171a08146252b8fd8ced28f
     public function updateCarListing($id, array $carData)
     {
         $car = $this->model->findOrFail($id);
