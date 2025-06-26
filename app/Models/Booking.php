@@ -30,8 +30,8 @@ class Booking extends Model
     protected $casts = [
         'booking_date' => 'datetime',
         'return_date' => 'datetime',
-        'start_time' => 'datetime:H:i',
-        'end_time' => 'datetime:H:i',
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
         'is_hourly' => 'boolean'
     ];
 

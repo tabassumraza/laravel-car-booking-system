@@ -27,8 +27,8 @@ class Carlist extends Model
         'available_to' => '20:00:00'
     ]; 
       protected $casts = [
-        'available_from' => 'datetime:H:i',
-        'available_to' => 'datetime:H:i'
+        'available_from' => 'datetime',
+        'available_to' => 'datetime'
     ];
 
 
