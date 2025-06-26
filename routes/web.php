@@ -59,7 +59,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('user')->group(function () {
         // Dashboard and booking routes
         Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
-        Route::post('/bookings', [BookingController::class, 'store'])->name('user.bookings.store');
+        // Route::post('/bookings', [BookingController::class, 'store'])->name('user.bookings.store');
+        // Route::post('/bookings', [BookingController::class, 'storeHourlyBooking'])->name('user.bookings.storeHourlyBooking');
+    Route::post('/bookings', [BookingController::class, 'store'])
+        ->name('user.bookings.store');
+    
+    // Specific hourly booking endpoint (optional, if you want separate route)
+    Route::post('/bookings/hourly', [BookingController::class, 'storeHourly'])
+        ->name('user.bookings.store.hourly');
+        
+    
         Route::post('/user/bookings/{booking}/cancel', [BookingController::class, 'cancel'])->name('user.bookings.cancel');
         // Car management routes (consider if these should be admin-only)
         Route::get('/addlist', [CarListController::class, 'create'])->name('admin.car.add');

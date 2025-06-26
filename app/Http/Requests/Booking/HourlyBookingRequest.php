@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Booking;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BookingCarRequest extends FormRequest
+class HourlyBookingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,16 +21,11 @@ class BookingCarRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-        'car_id' => 'required|exists:carlists,id',
-         'booking_type' => 'required|in:daily,hourly',
-        // Add conditional rules for hourly bookings
+             return [
+            'car_id'         => 'required|exists:carlists,id',
+            'start_time'     => 'required|date_format:H:i',
+            'duration_hours' => 'required|integer|min:1|max:12',
+            'booking_date'   => 'required|date|after_or_equal:today',
         ];
     }
-
-    public function messages()  { 
-        return[
-        'car_id.required' => 'Please enter',];
-    }
-    
 }

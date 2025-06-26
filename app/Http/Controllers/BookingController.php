@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\Carlist;
 use App\Http\Requests\BookingCarRequest;
+use App\Http\Requests\Booking\HourlyBookingRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Services\BookingService;
 use App\Services\CarListServices;
+
+
 
 use Exception;
 
@@ -64,14 +67,37 @@ class BookingController extends Controller
             // Update booking status
 
             $carlistService->updateCarListingUser($booking->car_id, $booking->car);
-            // $booking->update(attributes: ['status' => 'cancelled']);
-            // Update car status back to available
-            // $booking->car->update(['status' => 'available']);
             return back()->with('success', 'Booking cancelled successfully!');
         } catch (Exception $e) {
 
             return back()->with('error', 'Failed to cancel booking. Please try again.');
 
+        }
+    }
+    public function storeHourly(HourlyBookingRequest $request)
+    {
+        try {
+            $booking = $this->bookingService->storeHourlyBooking($request->validated());
+
+            // Redirect with success message (for web)
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'redirect' => route('user.dashboard'),
+                    'message' => 'Hourly booking created successfully!'
+                ], 201);
+            }
+
+            return redirect()->route('user.dashboard')
+                ->with('success', 'Hourly booking created successfully!');
+
+        } catch (Exception $e) {
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'message' => 'Failed to create booking: ' . $e->getMessage()
+                ], 400);
+            }
+
+            return back()->with('error', 'Failed to create booking: ' . $e->getMessage());
         }
     }
 }

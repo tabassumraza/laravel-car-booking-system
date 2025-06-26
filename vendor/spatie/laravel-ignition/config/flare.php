@@ -40,7 +40,7 @@ return [
 
     'flare_middleware' => [
         RemoveRequestIp::class,
-        AddGitInformation::class,
+        // AddGitInformation::class,
         AddNotifierName::class,
         AddEnvironmentInformation::class,
         AddExceptionInformation::class,
