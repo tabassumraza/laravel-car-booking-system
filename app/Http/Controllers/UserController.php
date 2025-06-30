@@ -19,8 +19,6 @@ class UserController extends Controller
     {
         // $availableCars = Carlist::where('status', 'available')->get();
         $availableCars = Carlist::where('status', true)->get();
-
-
         // get bookings 
         $userBookings = Booking::with('car')
             ->where('user_id', auth()->id())
@@ -30,6 +28,6 @@ class UserController extends Controller
         return view('user.dashboard', [
             'availableCars' => $availableCars,
             'userBookings' => $userBookings
-        ]);
+        ]);   
     }
 }

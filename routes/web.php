@@ -58,15 +58,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // User routes
     Route::prefix('user')->group(function () {
         // Dashboard and booking routes
-        Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
-        // Route::post('/bookings', [BookingController::class, 'store'])->name('user.bookings.store');
-        // Route::post('/bookings', [BookingController::class, 'storeHourlyBooking'])->name('user.bookings.storeHourlyBooking');
-    Route::post('/bookings', [BookingController::class, 'store'])
-        ->name('user.bookings.store');
+    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+
+    Route::post('/bookings', [BookingController::class, 'store'])->name('user.bookings.store');
+
+    Route::post('/bookings/hourly', [BookingController::class, 'storeHourly'])->name('bookings.hourly.store');
+    
+    // Get available slots (AJAX)
+    Route::get('/cars/{car}/available-slots', [BookingController::class, 'availableSlots'])->name('cars.availableSlots');
+
+    Route::get('/bookings/hourly/{car}', [BookingController::class, 'showBookingForm'])->name('user.bookings.hourly');
+
     
     // Specific hourly booking endpoint (optional, if you want separate route)
-    Route::post('/bookings/hourly', [BookingController::class, 'storeHourly'])
-        ->name('user.bookings.store.hourly');
+    Route::post('/bookings/hourly', [BookingController::class, 'storeHourly'])->name('user.bookings.store.hourly');
         
     
         Route::post('/user/bookings/{booking}/cancel', [BookingController::class, 'cancel'])->name('user.bookings.cancel');

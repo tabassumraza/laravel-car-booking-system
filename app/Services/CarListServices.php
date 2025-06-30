@@ -88,11 +88,16 @@ class CarListServices
         $car = $this->model->findOrFail($id);
 
         // Handle status change from booked to available
-        if (($carData->status == 'booked' || $carData['status'] == 'available') && $car->status == 'booked') {
-            // dd('ehre');
+ {
+            // dd($id);
             // Delete or cancel the booking
             Booking::where('car_id', $car->id)
-                ->delete();
+               ->whereDate('booking_date', $carData->booking_date)
+    ->whereTime('start_time', $carData->start_time)
+    ->whereTime('end_time', $carData->end_time)
+            ->whereIn('status', [0,1])
+                ->forceDelete();
+           
         }
 
         $car->update([
@@ -102,8 +107,8 @@ class CarListServices
             'carnum' => $carData->carnum ?? null,
             'status' => "available"
         ]);
+        return $carData;
 
-        return $car;
     }
 
     public function getAllCarsWithUsers(): Collection

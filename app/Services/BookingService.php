@@ -4,6 +4,9 @@ namespace App\Services;
 use App\Models\Booking; 
 use Auth;
 use Carbon\Carbon;
+use App\Models\Carlist;
+use Exception;
+use Request;
 
 class BookingService{
     protected $model;
@@ -16,7 +19,9 @@ class BookingService{
         $this->model->create([
             'user_id' => Auth::id(),
             'car_id' => $car->id,
-            'status' => 'booked'
+            'status' => 'booked',
+            'is_hourly' => false // Explicitly mark as daily booking
+
         ]);
 
     }
@@ -33,13 +38,33 @@ class BookingService{
             'end_time'       => $endTime,
             'duration_hours' => $data['duration_hours'],
             'is_hourly'      => true,
-            'status'         => 0
         ]);
 
-        // Update car status (car() is a relation on Booking)
-        $booking->car()->update(['status' => 0]);
+        // Update car status 
+        // $booking->car()->update(['status' => 0]);
+        $booking->car()->update(['status' => 1]);
+
 
         return $booking;
     }
+    public function AvailableSlots(Carlist $car, $date)
+    {
+        try {
+            $slots = $car->getAvailableSlots($date);
+            
+            return [
+                'success' => true,
+                'car' => $car->name,
+                'date' => $date,
+                'available_slots' => $slots
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
+        }
+    }
+    
 }
  

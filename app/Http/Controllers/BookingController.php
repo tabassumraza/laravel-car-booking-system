@@ -9,7 +9,7 @@ use App\Http\Requests\Booking\HourlyBookingRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Services\BookingService;
 use App\Services\CarListServices;
-
+use Illuminate\Http\Request;
 
 
 use Exception;
@@ -49,55 +49,74 @@ class BookingController extends Controller
 
     }
 
+   
     public function cancel(Booking $booking)
-    {
-        // dd($booking->car);
-        $carlistService = new CarListServices();
-        try {
-            // Authorization - ensure user can only cancel their own bookings
-            if ($booking->user_id !== Auth::id()) {
-                return back()->with('error', 'Unauthorized action.');
-            }
+{
+    $carlistService = new CarListServices();
 
-            // Only allow cancellation if booking is still active
-            if ($booking->status !== 'booked') {
-                return back()->with('error', 'This booking cannot be cancelled.');
-            }
-            // dd('here');
-            // Update booking status
-
-            $carlistService->updateCarListingUser($booking->car_id, $booking->car);
-            return back()->with('success', 'Booking cancelled successfully!');
-        } catch (Exception $e) {
-
-            return back()->with('error', 'Failed to cancel booking. Please try again.');
-
+    try {
+        // Authorization check
+        if ($booking->user_id !== Auth::id()) {
+            return back()->with('error', 'Unauthorized action.');
         }
+
+        // Check if the booking is still active
+        if ($booking->status !== 'booked') {
+            return back()->with('error', 'This booking cannot be cancelled.');
+        }
+
+        // Create carData from booking and car
+        $carData = (object)[
+            // "user_id"=>$booking->user_id,
+            'status' => $booking->status,
+            'booking_date' => $booking->booking_date,
+            'start_time' => $booking->start_time,
+            'end_time' => $booking->end_time,
+            'name' => $booking->car->name,
+            'description' => $booking->car->description,
+            'carnum' => $booking->car->carnum,
+        ];
+
+        // Cancel booking
+        $carlistService->updateCarListingUser($booking->car_id, $carData);
+
+        return back()->with('success', 'Booking cancelled successfully!');
+    } catch (Exception $e) {
+        return back()->with('error', 'Failed to cancel booking. Please try again.');
     }
+}
+
     public function storeHourly(HourlyBookingRequest $request)
     {
         try {
             $booking = $this->bookingService->storeHourlyBooking($request->validated());
-
-            // Redirect with success message (for web)
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'redirect' => route('user.dashboard'),
-                    'message' => 'Hourly booking created successfully!'
-                ], 201);
-            }
-
-            return redirect()->route('user.dashboard')
-                ->with('success', 'Hourly booking created successfully!');
-
-        } catch (Exception $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'message' => 'Failed to create booking: ' . $e->getMessage()
-                ], 400);
-            }
-
-            return back()->with('error', 'Failed to create booking: ' . $e->getMessage());
+        
+        // Don't update car status for hourly bookings
+        // The car remains available for other time slots
+        
+        return redirect()->route('user.dashboard')
+            ->with('success', 'Hourly booking created successfully!');
+            
+    } catch (Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => $e->getMessage()
+        ], 400);
+           
         }
+        
+    }
+
+    public function availableSlots(Carlist $car, Request $request)
+    {
+        $date = $request->input('date');
+
+        if (!$date) {
+            return response()->json(['success' => false, 'message' => 'Date is required'], 400);
+        }
+
+        $result = $this->bookingService->AvailableSlots($car, $date);
+
+        return response()->json($result);
     }
 }

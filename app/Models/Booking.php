@@ -93,19 +93,31 @@ class Booking extends Model
                $now->between($start, $end);
     }
 
-    protected static function booted()
-    {
-        static::addGlobalScope(new StatusScope());
+  protected static function booted()
+{
+    static::addGlobalScope(new StatusScope());
 
-        static::deleted(function ($booking) {
-            if ($booking->car && !$booking->car->bookings()->active()->exists()) {
-                $booking->car->update([
-                    'status' => 1,
-                    'user_id' => null
-                ]);
-            }
-        });
-    }
+    static::created(function ($booking) {
+        // Only update car status for daily bookings
+        if (!$booking->is_hourly) {
+            $booking->car->update([
+                'status' => 0, // booked
+                'user_id' => $booking->user_id
+            ]);
+        }
+    });
+
+    static::deleted(function ($booking) {
+        // Only update status if it's a daily booking
+        // Or if it's the last hourly booking
+        if (!$booking->is_hourly || !$booking->car->bookings()->active()->exists()) {
+            $booking->car->update([
+                'status' => 1, // available
+                'user_id' => null
+            ]);
+        }
+    });
+}
 
     public static function SlotAvailable($carId, $startTime, $endTime, $ignoreId = null)
     {
@@ -127,50 +139,75 @@ class Booking extends Model
         return $query->doesntExist();
     }
 
-    public static function createHourlyBooking(array $data)
-    {
-        return DB::transaction(function () use ($data) {
-            $car = Carlist::findOrFail($data['car_id']);
-            
-            $start = Carbon::parse($data['start_time']);
-            $end = $start->copy()->addHours($data['duration_hours']);
-            
-            if (!$car->isAvailableDuring($start->format('H:i'), $end->format('H:i'))) {
-                throw new \Exception('Car not available during requested hours');
-            }
-            
-            if (!self::SlotAvailable($data['car_id'], $start->format('H:i'), $end->format('H:i'))) {
-                throw new \Exception('Time slot already booked');
-            }
-            
-            return self::create([
-                'user_id' => Auth::id(),
-                'car_id' => $data['car_id'],
-                'booking_date' => $data['booking_date'],
-                'start_time' => $start->format('H:i'),
-                'end_time' => $end->format('H:i'),
-                'duration_hours' => $data['duration_hours'],
-                'is_hourly' => true,
-                'status' => 0
-            ]);
-        });
-    }
-
-    public static function getAvailableSlots($carId, $date)
-    {
-        $car = Carlist::findOrFail($carId);
-        $bookedSlots = self::where('car_id', $carId)
-            ->whereDate('booking_date', $date)
-            // ->where('status', 0)
-            ->get(['start_time', 'end_time']);
+  public static function createHourlyBooking(array $data)
+{
+    return DB::transaction(function () use ($data) {
+        $car = Carlist::findOrFail($data['car_id']);
         
-       
-        return $car;
-    }
+        $start = Carbon::parse($data['start_time']);
+        $end = $start->copy()->addHours($data['duration_hours']);
+        
+        if (!$car->isAvailableDuring($start->format('H:i'), $end->format('H:i'))) {
+            throw new \Exception('Car not available during requested hours');
+        }
+        
+        if (!self::SlotAvailable($data['car_id'], $start->format('H:i'), $end->format('H:i'))) {
+            throw new \Exception('Time slot already booked');
+        }
+        
+        $booking = self::create([
+            'user_id' => Auth::id(),
+            'car_id' => $data['car_id'],
+            'booking_date' => $data['booking_date'],
+            'start_time' => $start->format('H:i'),
+            'end_time' => $end->format('H:i'),
+            'duration_hours' => $data['duration_hours'],
+            'is_hourly' => true,
+            'status' => 0
+        ]);
 
-    // protected function generateTimeSlots($car, $bookedSlots)
-    // {
-    //     // Implement your time slot generation algorithm
-    //     // Considering car availability and existing bookings
-    // }
+        // Return the updated available slots
+        return [
+            'booking' => $booking,
+            'available_slots' => $car->getAvailableSlots($data['booking_date'])
+        ];
+    });
+}
+public static function getAvailableSlots($carId, $date)
+{
+    $car = Carlist::findOrFail($carId);
+
+    // Example: define all possible slots (e.g., 9AM to 5PM, every 1 hour)
+    $allSlots = [
+        ['start_time' => '09:00', 'end_time' => '10:00'],
+        ['start_time' => '10:00', 'end_time' => '11:00'],
+        ['start_time' => '11:00', 'end_time' => '12:00'],
+        ['start_time' => '12:00', 'end_time' => '13:00'],
+        ['start_time' => '13:00', 'end_time' => '14:00'],
+        ['start_time' => '14:00', 'end_time' => '15:00'],
+        ['start_time' => '15:00', 'end_time' => '16:00'],
+        ['start_time' => '16:00', 'end_time' => '17:00'],
+    ];
+
+    $bookedSlots = Booking::where('car_id', $carId)
+        ->whereDate('booking_date', $date)
+        ->get(['start_time', 'end_time'])
+        ->toArray();
+
+    // Filter out booked slots
+    $availableSlots = array_filter($allSlots, function ($slot) use ($bookedSlots) {
+        foreach ($bookedSlots as $booked) {
+            if (
+                $slot['start_time'] == $booked['start_time'] &&
+                $slot['end_time'] == $booked['end_time']
+            ) {
+                return false;
+            }
+        }
+        return true;
+    });
+
+    return array_values($availableSlots); // Reset keys
+}
+   
 }

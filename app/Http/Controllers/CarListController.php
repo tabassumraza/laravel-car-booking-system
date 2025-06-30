@@ -38,4 +38,5 @@ class CarListController extends Controller
         $this->CarListService->updateCarListing($id, $request->validated());
         return response()->json(['success' => true]);
     }
+    
 }
