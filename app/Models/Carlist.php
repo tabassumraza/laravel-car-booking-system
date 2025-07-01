@@ -28,10 +28,10 @@ class Carlist extends Model
         'available_to' => '20:00:00'
     ];
 
-    protected $casts = [
-        'available_from' => 'datetime',
-        'available_to' => 'datetime'
-    ];
+    // protected $casts = [
+    //     'available_from' => 'datetime',
+    //     'available_to' => 'datetime'
+    // ];
 
     protected function status(): Attribute {
         return Attribute::make(
@@ -73,43 +73,46 @@ class Carlist extends Model
      * Returns available hourly slots for a given date
      */
   
-    public function getAvailableSlots($date)
+ public function getAvailableSlots($date)
 {
-    // Define your business working hours (example: 9 AM to 5 PM)
-    $allSlots = [
-        ['start_time' => '09:00', 'end_time' => '10:00'],
-        ['start_time' => '10:00', 'end_time' => '11:00'],
-        ['start_time' => '11:00', 'end_time' => '12:00'],
-        ['start_time' => '12:00', 'end_time' => '13:00'],
-        ['start_time' => '13:00', 'end_time' => '14:00'],
-        ['start_time' => '14:00', 'end_time' => '15:00'],
-        ['start_time' => '15:00', 'end_time' => '16:00'],
-        ['start_time' => '16:00', 'end_time' => '17:00'],
-    ];
+    // Use the car's actual availability window instead of hardcoded values
+    $start = Carbon::parse($this->available_from);
+    $end = Carbon::parse($this->available_to);
+    
+    $allSlots = [];
+    $current = $start->copy();
+    
+    while ($current->lt($end)) {
+        $allSlots[] = [
+            'start_time' => $current->format('H:i'),
+            'end_time' => $current->copy()->addHour()->format('H:i'),
+            'formatted' => $current->format('h:i A').' - '.$current->copy()->addHour()->format('h:i A')
+        ];
+        $current->addHour();
+    }
 
-    // Get bookings for this car on the given date
     $bookedSlots = $this->booking()
         ->whereDate('booking_date', $date)
         ->where('is_hourly', true)
         ->get(['start_time', 'end_time'])
         ->toArray();
 
-    // Filter out booked slots
     $availableSlots = array_filter($allSlots, function ($slot) use ($bookedSlots) {
         foreach ($bookedSlots as $booked) {
-            if (
-                $slot['start_time'] == $booked['start_time'] &&
-                $slot['end_time'] == $booked['end_time']
-            ) {
-                return false; // slot already booked
+            $slotStart = Carbon::parse($slot['start_time']);
+            $slotEnd = Carbon::parse($slot['end_time']);
+            $bookedStart = Carbon::parse($booked['start_time']);
+            $bookedEnd = Carbon::parse($booked['end_time']);
+            
+            if ($slotStart->lt($bookedEnd) && $slotEnd->gt($bookedStart)) {
+                return false;
             }
         }
         return true;
     });
 
-    return array_values($availableSlots); // re-indexed array
+    return array_values($availableSlots);
 }
-
 
     protected function generateTimeSlots($bookedSlots)
     {

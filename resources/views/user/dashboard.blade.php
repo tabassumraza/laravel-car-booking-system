@@ -72,9 +72,9 @@
                                                         @csrf
                                                         <input type="hidden" name="car_id" value="{{ $car->id }}">
                                                         <input type="hidden" name="booking_type" value="daily">
-                                                        <button type="submit" class="text-blue-600 hover:text-blue-900 px-3 py-1 border border-blue-600 rounded">
+                                                        <!-- <button type="submit" class="text-blue-600 hover:text-blue-900 px-3 py-1 border border-blue-600 rounded">
                                                             Daily
-                                                        </button>
+                                                        </button> -->
                                                     </form>
                                                     
                                                     <!-- Hourly Booking Button - Triggers Modal -->

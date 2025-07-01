@@ -30,8 +30,8 @@ class Booking extends Model
     protected $casts = [
         'booking_date' => 'datetime',
         'return_date' => 'datetime',
-        'start_time' => 'datetime',
-        'end_time' => 'datetime',
+         'start_time' => 'string',  // Changed from datetime
+    'end_time' => 'string', 
         'is_hourly' => 'boolean'
     ];
 
@@ -119,25 +119,26 @@ class Booking extends Model
     });
 }
 
-    public static function SlotAvailable($carId, $startTime, $endTime, $ignoreId = null)
-    {
-        $query = self::where('car_id', $carId)
-            // ->where('status', 0)
-            ->where(function($q) use ($startTime, $endTime) {
-                $q->whereBetween('start_time', [$startTime, $endTime])
-                  ->orWhereBetween('end_time', [$startTime, $endTime])
-                  ->orWhere(function($q) use ($startTime, $endTime) {
-                      $q->where('start_time', '<', $startTime)
-                        ->where('end_time', '>', $endTime);
-                  });
-            });
-        
-        if ($ignoreId) {
-            $query->where('id', '!=', $ignoreId);
-        }
-        
-        return $query->doesntExist();
+   public static function SlotAvailable($carId, $bookingDate, $startTime, $endTime, $ignoreId = null)
+{
+    $query = self::where('car_id', $carId)
+        ->where('status', 0)
+        ->whereDate('booking_date', $bookingDate)
+        ->where(function($q) use ($startTime, $endTime) {
+            $q->whereBetween('start_time', [$startTime, $endTime])
+              ->orWhereBetween('end_time', [$startTime, $endTime])
+              ->orWhere(function($q) use ($startTime, $endTime) {
+                  $q->where('start_time', '<', $startTime)
+                    ->where('end_time', '>', $endTime);
+              });
+        });
+    
+    if ($ignoreId) {
+        $query->where('id', '!=', $ignoreId);
     }
+    
+    return $query->doesntExist();
+}
 
   public static function createHourlyBooking(array $data)
 {
@@ -173,41 +174,6 @@ class Booking extends Model
         ];
     });
 }
-public static function getAvailableSlots($carId, $date=null)
-{
-    $car = Carlist::findOrFail($carId);
 
-    // Example: define all possible slots (e.g., 9AM to 5PM, every 1 hour)
-    $allSlots = [
-        ['start_time' => '09:00', 'end_time' => '10:00'],
-        ['start_time' => '10:00', 'end_time' => '11:00'],
-        ['start_time' => '11:00', 'end_time' => '12:00'],
-        ['start_time' => '12:00', 'end_time' => '13:00'],
-        ['start_time' => '13:00', 'end_time' => '14:00'],
-        ['start_time' => '14:00', 'end_time' => '15:00'],
-        ['start_time' => '15:00', 'end_time' => '16:00'],
-        ['start_time' => '16:00', 'end_time' => '17:00'],
-    ];
-
-    $bookedSlots = Booking::where('car_id', $carId)
-        ->whereDate('booking_date', $date)
-        ->get(['start_time', 'end_time'])
-        ->toArray();
-
-    // Filter out booked slots
-    $availableSlots = array_filter($allSlots, function ($slot) use ($bookedSlots) {
-        foreach ($bookedSlots as $booked) {
-            if (
-                $slot['start_time'] == $booked['start_time'] &&
-                $slot['end_time'] == $booked['end_time']
-            ) {
-                return false;
-            }
-        }
-        return true;
-    });
-
-    return array_values($availableSlots); // Reset keys
-}
    
 }
