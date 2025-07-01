@@ -173,7 +173,7 @@ class Booking extends Model
         ];
     });
 }
-public static function getAvailableSlots($carId, $date)
+public static function getAvailableSlots($carId, $date=null)
 {
     $car = Carlist::findOrFail($carId);
 
